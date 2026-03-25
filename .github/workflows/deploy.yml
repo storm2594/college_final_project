@@ -1,0 +1,99 @@
+name: Build and Deploy to ECS
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AWS_PRIMARY_REGION: us-east-1
+  AWS_SECONDARY_REGION: us-east-2
+  ECR_FRONTEND_REPO: task-dashboard-frontend
+  ECR_BACKEND_REPO: task-dashboard-backend
+  ECS_CLUSTER_PRIMARY: task-dashboard-primary-cluster
+  ECS_CLUSTER_SECONDARY: task-dashboard-secondary-cluster
+  ECS_SERVICE_FE_PRIMARY: task-dashboard-primary-frontend-svc
+  ECS_SERVICE_FE_SECONDARY: task-dashboard-secondary-frontend-svc
+  ECS_SERVICE_BE_PRIMARY: task-dashboard-primary-backend-svc
+  ECS_SERVICE_BE_SECONDARY: task-dashboard-secondary-backend-svc
+
+jobs:
+  deploy-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_PRIMARY_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, tag, and push Backend image to Amazon ECR
+        id: build-backend
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          cd backend
+          docker build -t $ECR_REGISTRY/$ECR_BACKEND_REPO:latest -t $ECR_REGISTRY/$ECR_BACKEND_REPO:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_BACKEND_REPO:latest
+          docker push $ECR_REGISTRY/$ECR_BACKEND_REPO:$IMAGE_TAG
+          echo "image=$ECR_REGISTRY/$ECR_BACKEND_REPO:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+      - name: Update ECS Service (Primary Region)
+        run: |
+          aws ecs update-service --cluster ${{ env.ECS_CLUSTER_PRIMARY }} --service ${{ env.ECS_SERVICE_BE_PRIMARY }} --force-new-deployment --region ${{ env.AWS_PRIMARY_REGION }}
+
+      - name: Sleep for ECR Cross-Region Replication
+        run: sleep 30
+
+      - name: Update ECS Service (Secondary Region)
+        run: |
+          aws ecs update-service --cluster ${{ env.ECS_CLUSTER_SECONDARY }} --service ${{ env.ECS_SERVICE_BE_SECONDARY }} --force-new-deployment --region ${{ env.AWS_SECONDARY_REGION }}
+
+  deploy-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_PRIMARY_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, tag, and push Frontend image to Amazon ECR
+        id: build-frontend
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          cd frontend
+          docker build -t $ECR_REGISTRY/$ECR_FRONTEND_REPO:latest -t $ECR_REGISTRY/$ECR_FRONTEND_REPO:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_FRONTEND_REPO:latest
+          docker push $ECR_REGISTRY/$ECR_FRONTEND_REPO:$IMAGE_TAG
+          echo "image=$ECR_REGISTRY/$ECR_FRONTEND_REPO:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+      - name: Update ECS Service (Primary Region)
+        run: |
+          aws ecs update-service --cluster ${{ env.ECS_CLUSTER_PRIMARY }} --service ${{ env.ECS_SERVICE_FE_PRIMARY }} --force-new-deployment --region ${{ env.AWS_PRIMARY_REGION }}
+
+      - name: Sleep for ECR Cross-Region Replication
+        run: sleep 30
+
+      - name: Update ECS Service (Secondary Region)
+        run: |
+          aws ecs update-service --cluster ${{ env.ECS_CLUSTER_SECONDARY }} --service ${{ env.ECS_SERVICE_FE_SECONDARY }} --force-new-deployment --region ${{ env.AWS_SECONDARY_REGION }}

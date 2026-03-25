@@ -1,0 +1,97 @@
+﻿.\terraform.exe : [31mΓò╖[0m[0m
+At line:1 char:1
++ .\terraform.exe apply -var="db_password=SuperSecretDBPass123!" 
+-auto- ...
++ 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([31mΓò╖[0m[0m:String) 
+    [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[31mΓöé[0m [0m[1m[31mError: [0m[0m[1mMissing required 
+argument[0m
+[31mΓöé[0m [0m
+[31mΓöé[0m [0m[0m  on ecs.tf line 81, in resource 
+"aws_ecs_service" "primary_backend":
+[31mΓöé[0m [0m  81:   load_balancer [4m{[0m[0m
+[31mΓöé[0m [0m
+[31mΓöé[0m [0mThe argument "container_port" is required, but no 
+definition was found.
+[31mΓò╡[0m[0m
+[31mΓò╖[0m[0m
+[31mΓöé[0m [0m[1m[31mError: [0m[0m[1mUnsupported argument[0m
+[31mΓöé[0m [0m
+[31mΓöé[0m [0m[0m  on ecs.tf line 84, in resource 
+"aws_ecs_service" "primary_backend":
+[31mΓöé[0m [0m  84:     [4mcontainerPort[0m    = 3000[0m
+[31mΓöé[0m [0m
+[31mΓöé[0m [0mAn argument named "containerPort" is not expected 
+here. Did you mean
+[31mΓöé[0m [0m"container_port"?
+[31mΓò╡[0m[0m
+[31mΓò╖[0m[0m
+[31mΓöé[0m [0m[1m[31mError: [0m[0m[1mMissing required 
+argument[0m
+[31mΓöé[0m [0m
+[31mΓöé[0m [0m[0m  on ecs.tf line 131, in resource 
+"aws_ecs_service" "primary_frontend":
+[31mΓöé[0m [0m 131:   load_balancer [4m{[0m[0m
+[31mΓöé[0m [0m
+[31mΓöé[0m [0mThe argument "container_port" is required, but no 
+definition was found.
+[31mΓò╡[0m[0m
+[31mΓò╖[0m[0m
+[31mΓöé[0m [0m[1m[31mError: [0m[0m[1mUnsupported argument[0m
+[31mΓöé[0m [0m
+[31mΓöé[0m [0m[0m  on ecs.tf line 134, in resource 
+"aws_ecs_service" "primary_frontend":
+[31mΓöé[0m [0m 134:     [4mcontainerPort[0m    = 80[0m
+[31mΓöé[0m [0m
+[31mΓöé[0m [0mAn argument named "containerPort" is not expected 
+here. Did you mean
+[31mΓöé[0m [0m"container_port"?
+[31mΓò╡[0m[0m
+[31mΓò╖[0m[0m
+[31mΓöé[0m [0m[1m[31mError: [0m[0m[1mMissing required 
+argument[0m
+[31mΓöé[0m [0m
+[31mΓöé[0m [0m[0m  on ecs.tf line 185, in resource 
+"aws_ecs_service" "secondary_backend":
+[31mΓöé[0m [0m 185:   load_balancer [4m{[0m[0m
+[31mΓöé[0m [0m
+[31mΓöé[0m [0mThe argument "container_port" is required, but no 
+definition was found.
+[31mΓò╡[0m[0m
+[31mΓò╖[0m[0m
+[31mΓöé[0m [0m[1m[31mError: [0m[0m[1mUnsupported argument[0m
+[31mΓöé[0m [0m
+[31mΓöé[0m [0m[0m  on ecs.tf line 188, in resource 
+"aws_ecs_service" "secondary_backend":
+[31mΓöé[0m [0m 188:     [4mcontainerPort[0m    = 3000[0m
+[31mΓöé[0m [0m
+[31mΓöé[0m [0mAn argument named "containerPort" is not expected 
+here. Did you mean
+[31mΓöé[0m [0m"container_port"?
+[31mΓò╡[0m[0m
+[31mΓò╖[0m[0m
+[31mΓöé[0m [0m[1m[31mError: [0m[0m[1mMissing required 
+argument[0m
+[31mΓöé[0m [0m
+[31mΓöé[0m [0m[0m  on ecs.tf line 235, in resource 
+"aws_ecs_service" "secondary_frontend":
+[31mΓöé[0m [0m 235:   load_balancer [4m{[0m[0m
+[31mΓöé[0m [0m
+[31mΓöé[0m [0mThe argument "container_port" is required, but no 
+definition was found.
+[31mΓò╡[0m[0m
+[31mΓò╖[0m[0m
+[31mΓöé[0m [0m[1m[31mError: [0m[0m[1mUnsupported argument[0m
+[31mΓöé[0m [0m
+[31mΓöé[0m [0m[0m  on ecs.tf line 238, in resource 
+"aws_ecs_service" "secondary_frontend":
+[31mΓöé[0m [0m 238:     [4mcontainerPort[0m    = 80[0m
+[31mΓöé[0m [0m
+[31mΓöé[0m [0mAn argument named "containerPort" is not expected 
+here. Did you mean
+[31mΓöé[0m [0m"container_port"?
+[31mΓò╡[0m[0m

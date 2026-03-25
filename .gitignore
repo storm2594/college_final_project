@@ -1,0 +1,16 @@
+# Node.js
+node_modules/
+dist/
+.env
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+*.exe
+.terraform.lock.hcl
+*.log
+
+# Misc
+.DS_Store

@@ -1,0 +1,2184 @@
+﻿[0m[1mdata.aws_availability_zones.primary: Reading...[0m[0m
+[0m[1mdata.aws_caller_identity.current: Reading...[0m[0m
+[0m[1mdata.aws_availability_zones.secondary: Reading...[0m[0m
+[0m[1mdata.aws_caller_identity.current: Read complete after 0s [id=654654241151][0m
+[0m[1mdata.aws_availability_zones.primary: Read complete after 1s [id=us-east-1][0m
+[0m[1mdata.aws_availability_zones.secondary: Read complete after 1s [id=us-east-2][0m
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [32m+[0m create[0m
+
+Terraform will perform the following actions:
+
+[1m  # aws_cloudwatch_dashboard.main[0m will be created
+[0m  [32m+[0m[0m resource "aws_cloudwatch_dashboard" "main" {
+      [32m+[0m[0m dashboard_arn  = (known after apply)
+      [32m+[0m[0m dashboard_body = jsonencode(
+            {
+              [32m+[0m[0m widgets = [
+                  [32m+[0m[0m {
+                      [32m+[0m[0m height     = 6
+                      [32m+[0m[0m properties = {
+                          [32m+[0m[0m metrics = [
+                              [32m+[0m[0m [
+                                  [32m+[0m[0m "AWS/ECS",
+                                  [32m+[0m[0m "CPUUtilization",
+                                  [32m+[0m[0m "ClusterName",
+                                  [32m+[0m[0m "task-dashboard-primary-cluster",
+                                ],
+                              [32m+[0m[0m [
+                                  [32m+[0m[0m ".",
+                                  [32m+[0m[0m ".",
+                                  [32m+[0m[0m ".",
+                                  [32m+[0m[0m "task-dashboard-secondary-cluster",
+                                ],
+                            ]
+                          [32m+[0m[0m region  = "us-east-1"
+                          [32m+[0m[0m stacked = false
+                          [32m+[0m[0m title   = "ECS CPU Utilization (Primary & Secondary)"
+                          [32m+[0m[0m view    = "timeSeries"
+                        }
+                      [32m+[0m[0m type       = "metric"
+                      [32m+[0m[0m width      = 12
+                      [32m+[0m[0m x          = 0
+                      [32m+[0m[0m y          = 0
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m height     = 6
+                      [32m+[0m[0m properties = {
+                          [32m+[0m[0m metrics = [
+                              [32m+[0m[0m [
+                                  [32m+[0m[0m "AWS/ECS",
+                                  [32m+[0m[0m "MemoryUtilization",
+                                  [32m+[0m[0m "ClusterName",
+                                  [32m+[0m[0m "task-dashboard-primary-cluster",
+                                ],
+                              [32m+[0m[0m [
+                                  [32m+[0m[0m ".",
+                                  [32m+[0m[0m ".",
+                                  [32m+[0m[0m ".",
+                                  [32m+[0m[0m "task-dashboard-secondary-cluster",
+                                ],
+                            ]
+                          [32m+[0m[0m region  = "us-east-1"
+                          [32m+[0m[0m stacked = false
+                          [32m+[0m[0m title   = "ECS Memory Utilization (Primary & Secondary)"
+                          [32m+[0m[0m view    = "timeSeries"
+                        }
+                      [32m+[0m[0m type       = "metric"
+                      [32m+[0m[0m width      = 12
+                      [32m+[0m[0m x          = 12
+                      [32m+[0m[0m y          = 0
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m height     = 6
+                      [32m+[0m[0m properties = {
+                          [32m+[0m[0m metrics = [
+                              [32m+[0m[0m [
+                                  [32m+[0m[0m "AWS/RDS",
+                                  [32m+[0m[0m "ReplicaLag",
+                                  [32m+[0m[0m "DBInstanceIdentifier",
+                                  [32m+[0m[0m "task-dashboard-secondary-replica",
+                                ],
+                            ]
+                          [32m+[0m[0m region  = "us-east-2"
+                          [32m+[0m[0m stacked = false
+                          [32m+[0m[0m title   = "RDS Cross-Region Replication Lag (Seconds)"
+                          [32m+[0m[0m view    = "timeSeries"
+                        }
+                      [32m+[0m[0m type       = "metric"
+                      [32m+[0m[0m width      = 12
+                      [32m+[0m[0m x          = 0
+                      [32m+[0m[0m y          = 6
+                    },
+                ]
+            }
+        )
+      [32m+[0m[0m dashboard_name = "task-dashboard-dashboard"
+      [32m+[0m[0m id             = (known after apply)
+    }
+
+[1m  # aws_cloudwatch_log_group.ecs_logs[0m will be created
+[0m  [32m+[0m[0m resource "aws_cloudwatch_log_group" "ecs_logs" {
+      [32m+[0m[0m arn               = (known after apply)
+      [32m+[0m[0m id                = (known after apply)
+      [32m+[0m[0m log_group_class   = (known after apply)
+      [32m+[0m[0m name              = "/ecs/task-dashboard"
+      [32m+[0m[0m name_prefix       = (known after apply)
+      [32m+[0m[0m retention_in_days = 14
+      [32m+[0m[0m skip_destroy      = false
+      [32m+[0m[0m tags_all          = (known after apply)
+    }
+
+[1m  # aws_cloudwatch_log_group.ecs_logs_secondary[0m will be created
+[0m  [32m+[0m[0m resource "aws_cloudwatch_log_group" "ecs_logs_secondary" {
+      [32m+[0m[0m arn               = (known after apply)
+      [32m+[0m[0m id                = (known after apply)
+      [32m+[0m[0m log_group_class   = (known after apply)
+      [32m+[0m[0m name              = "/ecs/task-dashboard"
+      [32m+[0m[0m name_prefix       = (known after apply)
+      [32m+[0m[0m retention_in_days = 14
+      [32m+[0m[0m skip_destroy      = false
+      [32m+[0m[0m tags_all          = (known after apply)
+    }
+
+[1m  # aws_db_instance.primary[0m will be created
+[0m  [32m+[0m[0m resource "aws_db_instance" "primary" {
+      [32m+[0m[0m address                               = (known after apply)
+      [32m+[0m[0m allocated_storage                     = 20
+      [32m+[0m[0m apply_immediately                     = false
+      [32m+[0m[0m arn                                   = (known after apply)
+      [32m+[0m[0m auto_minor_version_upgrade            = true
+      [32m+[0m[0m availability_zone                     = (known after apply)
+      [32m+[0m[0m backup_retention_period               = 7
+      [32m+[0m[0m backup_target                         = (known after apply)
+      [32m+[0m[0m backup_window                         = (known after apply)
+      [32m+[0m[0m ca_cert_identifier                    = (known after apply)
+      [32m+[0m[0m character_set_name                    = (known after apply)
+      [32m+[0m[0m copy_tags_to_snapshot                 = false
+      [32m+[0m[0m database_insights_mode                = (known after apply)
+      [32m+[0m[0m db_name                               = (known after apply)
+      [32m+[0m[0m db_subnet_group_name                  = "task-dashboard-primary-sng"
+      [32m+[0m[0m dedicated_log_volume                  = false
+      [32m+[0m[0m delete_automated_backups              = true
+      [32m+[0m[0m domain_fqdn                           = (known after apply)
+      [32m+[0m[0m endpoint                              = (known after apply)
+      [32m+[0m[0m engine                                = "postgres"
+      [32m+[0m[0m engine_lifecycle_support              = (known after apply)
+      [32m+[0m[0m engine_version                        = "15"
+      [32m+[0m[0m engine_version_actual                 = (known after apply)
+      [32m+[0m[0m hosted_zone_id                        = (known after apply)
+      [32m+[0m[0m id                                    = (known after apply)
+      [32m+[0m[0m identifier                            = "task-dashboard-primary-db"
+      [32m+[0m[0m identifier_prefix                     = (known after apply)
+      [32m+[0m[0m instance_class                        = "db.t3.micro"
+      [32m+[0m[0m iops                                  = (known after apply)
+      [32m+[0m[0m kms_key_id                            = (known after apply)
+      [32m+[0m[0m latest_restorable_time                = (known after apply)
+      [32m+[0m[0m license_model                         = (known after apply)
+      [32m+[0m[0m listener_endpoint                     = (known after apply)
+      [32m+[0m[0m maintenance_window                    = (known after apply)
+      [32m+[0m[0m master_user_secret                    = (known after apply)
+      [32m+[0m[0m master_user_secret_kms_key_id         = (known after apply)
+      [32m+[0m[0m monitoring_interval                   = 0
+      [32m+[0m[0m monitoring_role_arn                   = (known after apply)
+      [32m+[0m[0m multi_az                              = false
+      [32m+[0m[0m nchar_character_set_name              = (known after apply)
+      [32m+[0m[0m network_type                          = (known after apply)
+      [32m+[0m[0m option_group_name                     = (known after apply)
+      [32m+[0m[0m parameter_group_name                  = (known after apply)
+      [32m+[0m[0m password                              = (sensitive value)
+      [32m+[0m[0m performance_insights_enabled          = false
+      [32m+[0m[0m performance_insights_kms_key_id       = (known after apply)
+      [32m+[0m[0m performance_insights_retention_period = (known after apply)
+      [32m+[0m[0m port                                  = (known after apply)
+      [32m+[0m[0m publicly_accessible                   = false
+      [32m+[0m[0m replica_mode                          = (known after apply)
+      [32m+[0m[0m replicas                              = (known after apply)
+      [32m+[0m[0m resource_id                           = (known after apply)
+      [32m+[0m[0m skip_final_snapshot                   = true
+      [32m+[0m[0m snapshot_identifier                   = (known after apply)
+      [32m+[0m[0m status                                = (known after apply)
+      [32m+[0m[0m storage_throughput                    = (known after apply)
+      [32m+[0m[0m storage_type                          = "gp2"
+      [32m+[0m[0m tags                                  = {
+          [32m+[0m[0m "Name" = "Primary Database"
+        }
+      [32m+[0m[0m tags_all                              = {
+          [32m+[0m[0m "Name" = "Primary Database"
+        }
+      [32m+[0m[0m timezone                              = (known after apply)
+      [32m+[0m[0m username                              = "admin"
+      [32m+[0m[0m vpc_security_group_ids                = (known after apply)
+    }
+
+[1m  # aws_db_instance.secondary_replica[0m will be created
+[0m  [32m+[0m[0m resource "aws_db_instance" "secondary_replica" {
+      [32m+[0m[0m address                               = (known after apply)
+      [32m+[0m[0m allocated_storage                     = (known after apply)
+      [32m+[0m[0m apply_immediately                     = false
+      [32m+[0m[0m arn                                   = (known after apply)
+      [32m+[0m[0m auto_minor_version_upgrade            = true
+      [32m+[0m[0m availability_zone                     = (known after apply)
+      [32m+[0m[0m backup_retention_period               = (known after apply)
+      [32m+[0m[0m backup_target                         = (known after apply)
+      [32m+[0m[0m backup_window                         = (known after apply)
+      [32m+[0m[0m ca_cert_identifier                    = (known after apply)
+      [32m+[0m[0m character_set_name                    = (known after apply)
+      [32m+[0m[0m copy_tags_to_snapshot                 = false
+      [32m+[0m[0m database_insights_mode                = (known after apply)
+      [32m+[0m[0m db_name                               = (known after apply)
+      [32m+[0m[0m db_subnet_group_name                  = "task-dashboard-secondary-sng"
+      [32m+[0m[0m dedicated_log_volume                  = false
+      [32m+[0m[0m delete_automated_backups              = true
+      [32m+[0m[0m domain_fqdn                           = (known after apply)
+      [32m+[0m[0m endpoint                              = (known after apply)
+      [32m+[0m[0m engine                                = (known after apply)
+      [32m+[0m[0m engine_lifecycle_support              = (known after apply)
+      [32m+[0m[0m engine_version                        = (known after apply)
+      [32m+[0m[0m engine_version_actual                 = (known after apply)
+      [32m+[0m[0m hosted_zone_id                        = (known after apply)
+      [32m+[0m[0m id                                    = (known after apply)
+      [32m+[0m[0m identifier                            = "task-dashboard-secondary-replica"
+      [32m+[0m[0m identifier_prefix                     = (known after apply)
+      [32m+[0m[0m instance_class                        = "db.t3.micro"
+      [32m+[0m[0m iops                                  = (known after apply)
+      [32m+[0m[0m kms_key_id                            = (known after apply)
+      [32m+[0m[0m latest_restorable_time                = (known after apply)
+      [32m+[0m[0m license_model                         = (known after apply)
+      [32m+[0m[0m listener_endpoint                     = (known after apply)
+      [32m+[0m[0m maintenance_window                    = (known after apply)
+      [32m+[0m[0m master_user_secret                    = (known after apply)
+      [32m+[0m[0m master_user_secret_kms_key_id         = (known after apply)
+      [32m+[0m[0m monitoring_interval                   = 0
+      [32m+[0m[0m monitoring_role_arn                   = (known after apply)
+      [32m+[0m[0m multi_az                              = (known after apply)
+      [32m+[0m[0m nchar_character_set_name              = (known after apply)
+      [32m+[0m[0m network_type                          = (known after apply)
+      [32m+[0m[0m option_group_name                     = (known after apply)
+      [32m+[0m[0m parameter_group_name                  = (known after apply)
+      [32m+[0m[0m performance_insights_enabled          = false
+      [32m+[0m[0m performance_insights_kms_key_id       = (known after apply)
+      [32m+[0m[0m performance_insights_retention_period = (known after apply)
+      [32m+[0m[0m port                                  = (known after apply)
+      [32m+[0m[0m publicly_accessible                   = false
+      [32m+[0m[0m replica_mode                          = (known after apply)
+      [32m+[0m[0m replicas                              = (known after apply)
+      [32m+[0m[0m replicate_source_db                   = (known after apply)
+      [32m+[0m[0m resource_id                           = (known after apply)
+      [32m+[0m[0m skip_final_snapshot                   = true
+      [32m+[0m[0m snapshot_identifier                   = (known after apply)
+      [32m+[0m[0m status                                = (known after apply)
+      [32m+[0m[0m storage_throughput                    = (known after apply)
+      [32m+[0m[0m storage_type                          = (known after apply)
+      [32m+[0m[0m tags                                  = {
+          [32m+[0m[0m "Name" = "Secondary Replica Database"
+        }
+      [32m+[0m[0m tags_all                              = {
+          [32m+[0m[0m "Name" = "Secondary Replica Database"
+        }
+      [32m+[0m[0m timezone                              = (known after apply)
+      [32m+[0m[0m username                              = (known after apply)
+      [32m+[0m[0m vpc_security_group_ids                = (known after apply)
+    }
+
+[1m  # aws_db_subnet_group.primary[0m will be created
+[0m  [32m+[0m[0m resource "aws_db_subnet_group" "primary" {
+      [32m+[0m[0m arn                     = (known after apply)
+      [32m+[0m[0m description             = "Managed by Terraform"
+      [32m+[0m[0m id                      = (known after apply)
+      [32m+[0m[0m name                    = "task-dashboard-primary-sng"
+      [32m+[0m[0m name_prefix             = (known after apply)
+      [32m+[0m[0m subnet_ids              = (known after apply)
+      [32m+[0m[0m supported_network_types = (known after apply)
+      [32m+[0m[0m tags                    = {
+          [32m+[0m[0m "Name" = "Primary DB Subnet Group"
+        }
+      [32m+[0m[0m tags_all                = {
+          [32m+[0m[0m "Name" = "Primary DB Subnet Group"
+        }
+      [32m+[0m[0m vpc_id                  = (known after apply)
+    }
+
+[1m  # aws_db_subnet_group.secondary[0m will be created
+[0m  [32m+[0m[0m resource "aws_db_subnet_group" "secondary" {
+      [32m+[0m[0m arn                     = (known after apply)
+      [32m+[0m[0m description             = "Managed by Terraform"
+      [32m+[0m[0m id                      = (known after apply)
+      [32m+[0m[0m name                    = "task-dashboard-secondary-sng"
+      [32m+[0m[0m name_prefix             = (known after apply)
+      [32m+[0m[0m subnet_ids              = (known after apply)
+      [32m+[0m[0m supported_network_types = (known after apply)
+      [32m+[0m[0m tags                    = {
+          [32m+[0m[0m "Name" = "Secondary DB Subnet Group"
+        }
+      [32m+[0m[0m tags_all                = {
+          [32m+[0m[0m "Name" = "Secondary DB Subnet Group"
+        }
+      [32m+[0m[0m vpc_id                  = (known after apply)
+    }
+
+[1m  # aws_ecr_replication_configuration.crr[0m will be created
+[0m  [32m+[0m[0m resource "aws_ecr_replication_configuration" "crr" {
+      [32m+[0m[0m id          = (known after apply)
+      [32m+[0m[0m registry_id = (known after apply)
+
+      [32m+[0m[0m replication_configuration {
+          [32m+[0m[0m rule {
+              [32m+[0m[0m destination {
+                  [32m+[0m[0m region      = "us-east-2"
+                  [32m+[0m[0m registry_id = "654654241151"
+                }
+            }
+        }
+    }
+
+[1m  # aws_ecr_repository.backend[0m will be created
+[0m  [32m+[0m[0m resource "aws_ecr_repository" "backend" {
+      [32m+[0m[0m arn                  = (known after apply)
+      [32m+[0m[0m id                   = (known after apply)
+      [32m+[0m[0m image_tag_mutability = "MUTABLE"
+      [32m+[0m[0m name                 = "task-dashboard-backend"
+      [32m+[0m[0m registry_id          = (known after apply)
+      [32m+[0m[0m repository_url       = (known after apply)
+      [32m+[0m[0m tags_all             = (known after apply)
+
+      [32m+[0m[0m image_scanning_configuration {
+          [32m+[0m[0m scan_on_push = true
+        }
+    }
+
+[1m  # aws_ecr_repository.frontend[0m will be created
+[0m  [32m+[0m[0m resource "aws_ecr_repository" "frontend" {
+      [32m+[0m[0m arn                  = (known after apply)
+      [32m+[0m[0m id                   = (known after apply)
+      [32m+[0m[0m image_tag_mutability = "MUTABLE"
+      [32m+[0m[0m name                 = "task-dashboard-frontend"
+      [32m+[0m[0m registry_id          = (known after apply)
+      [32m+[0m[0m repository_url       = (known after apply)
+      [32m+[0m[0m tags_all             = (known after apply)
+
+      [32m+[0m[0m image_scanning_configuration {
+          [32m+[0m[0m scan_on_push = true
+        }
+    }
+
+[1m  # aws_ecs_cluster.primary[0m will be created
+[0m  [32m+[0m[0m resource "aws_ecs_cluster" "primary" {
+      [32m+[0m[0m arn      = (known after apply)
+      [32m+[0m[0m id       = (known after apply)
+      [32m+[0m[0m name     = "task-dashboard-primary-cluster"
+      [32m+[0m[0m tags_all = (known after apply)
+
+      [32m+[0m[0m setting {
+          [32m+[0m[0m name  = "containerInsights"
+          [32m+[0m[0m value = "enabled"
+        }
+    }
+
+[1m  # aws_ecs_cluster.secondary[0m will be created
+[0m  [32m+[0m[0m resource "aws_ecs_cluster" "secondary" {
+      [32m+[0m[0m arn      = (known after apply)
+      [32m+[0m[0m id       = (known after apply)
+      [32m+[0m[0m name     = "task-dashboard-secondary-cluster"
+      [32m+[0m[0m tags_all = (known after apply)
+
+      [32m+[0m[0m setting {
+          [32m+[0m[0m name  = "containerInsights"
+          [32m+[0m[0m value = "enabled"
+        }
+    }
+
+[1m  # aws_ecs_service.primary_backend[0m will be created
+[0m  [32m+[0m[0m resource "aws_ecs_service" "primary_backend" {
+      [32m+[0m[0m availability_zone_rebalancing      = "DISABLED"
+      [32m+[0m[0m cluster                            = (known after apply)
+      [32m+[0m[0m deployment_maximum_percent         = 200
+      [32m+[0m[0m deployment_minimum_healthy_percent = 100
+      [32m+[0m[0m desired_count                      = 1
+      [32m+[0m[0m enable_ecs_managed_tags            = false
+      [32m+[0m[0m enable_execute_command             = false
+      [32m+[0m[0m iam_role                           = (known after apply)
+      [32m+[0m[0m id                                 = (known after apply)
+      [32m+[0m[0m launch_type                        = "FARGATE"
+      [32m+[0m[0m name                               = "task-dashboard-primary-backend-svc"
+      [32m+[0m[0m platform_version                   = (known after apply)
+      [32m+[0m[0m scheduling_strategy                = "REPLICA"
+      [32m+[0m[0m tags_all                           = (known after apply)
+      [32m+[0m[0m task_definition                    = (known after apply)
+      [32m+[0m[0m triggers                           = (known after apply)
+      [32m+[0m[0m wait_for_steady_state              = false
+
+      [32m+[0m[0m load_balancer {
+          [32m+[0m[0m container_name   = "backend"
+          [32m+[0m[0m container_port   = 3000
+          [32m+[0m[0m target_group_arn = (known after apply)
+        }
+
+      [32m+[0m[0m network_configuration {
+          [32m+[0m[0m assign_public_ip = false
+          [32m+[0m[0m security_groups  = (known after apply)
+          [32m+[0m[0m subnets          = (known after apply)
+        }
+    }
+
+[1m  # aws_ecs_service.primary_frontend[0m will be created
+[0m  [32m+[0m[0m resource "aws_ecs_service" "primary_frontend" {
+      [32m+[0m[0m availability_zone_rebalancing      = "DISABLED"
+      [32m+[0m[0m cluster                            = (known after apply)
+      [32m+[0m[0m deployment_maximum_percent         = 200
+      [32m+[0m[0m deployment_minimum_healthy_percent = 100
+      [32m+[0m[0m desired_count                      = 1
+      [32m+[0m[0m enable_ecs_managed_tags            = false
+      [32m+[0m[0m enable_execute_command             = false
+      [32m+[0m[0m iam_role                           = (known after apply)
+      [32m+[0m[0m id                                 = (known after apply)
+      [32m+[0m[0m launch_type                        = "FARGATE"
+      [32m+[0m[0m name                               = "task-dashboard-primary-frontend-svc"
+      [32m+[0m[0m platform_version                   = (known after apply)
+      [32m+[0m[0m scheduling_strategy                = "REPLICA"
+      [32m+[0m[0m tags_all                           = (known after apply)
+      [32m+[0m[0m task_definition                    = (known after apply)
+      [32m+[0m[0m triggers                           = (known after apply)
+      [32m+[0m[0m wait_for_steady_state              = false
+
+      [32m+[0m[0m load_balancer {
+          [32m+[0m[0m container_name   = "frontend"
+          [32m+[0m[0m container_port   = 80
+          [32m+[0m[0m target_group_arn = (known after apply)
+        }
+
+      [32m+[0m[0m network_configuration {
+          [32m+[0m[0m assign_public_ip = false
+          [32m+[0m[0m security_groups  = (known after apply)
+          [32m+[0m[0m subnets          = (known after apply)
+        }
+    }
+
+[1m  # aws_ecs_service.secondary_backend[0m will be created
+[0m  [32m+[0m[0m resource "aws_ecs_service" "secondary_backend" {
+      [32m+[0m[0m availability_zone_rebalancing      = "DISABLED"
+      [32m+[0m[0m cluster                            = (known after apply)
+      [32m+[0m[0m deployment_maximum_percent         = 200
+      [32m+[0m[0m deployment_minimum_healthy_percent = 100
+      [32m+[0m[0m desired_count                      = 1
+      [32m+[0m[0m enable_ecs_managed_tags            = false
+      [32m+[0m[0m enable_execute_command             = false
+      [32m+[0m[0m iam_role                           = (known after apply)
+      [32m+[0m[0m id                                 = (known after apply)
+      [32m+[0m[0m launch_type                        = "FARGATE"
+      [32m+[0m[0m name                               = "task-dashboard-secondary-backend-svc"
+      [32m+[0m[0m platform_version                   = (known after apply)
+      [32m+[0m[0m scheduling_strategy                = "REPLICA"
+      [32m+[0m[0m tags_all                           = (known after apply)
+      [32m+[0m[0m task_definition                    = (known after apply)
+      [32m+[0m[0m triggers                           = (known after apply)
+      [32m+[0m[0m wait_for_steady_state              = false
+
+      [32m+[0m[0m load_balancer {
+          [32m+[0m[0m container_name   = "backend"
+          [32m+[0m[0m container_port   = 3000
+          [32m+[0m[0m target_group_arn = (known after apply)
+        }
+
+      [32m+[0m[0m network_configuration {
+          [32m+[0m[0m assign_public_ip = false
+          [32m+[0m[0m security_groups  = (known after apply)
+          [32m+[0m[0m subnets          = (known after apply)
+        }
+    }
+
+[1m  # aws_ecs_service.secondary_frontend[0m will be created
+[0m  [32m+[0m[0m resource "aws_ecs_service" "secondary_frontend" {
+      [32m+[0m[0m availability_zone_rebalancing      = "DISABLED"
+      [32m+[0m[0m cluster                            = (known after apply)
+      [32m+[0m[0m deployment_maximum_percent         = 200
+      [32m+[0m[0m deployment_minimum_healthy_percent = 100
+      [32m+[0m[0m desired_count                      = 1
+      [32m+[0m[0m enable_ecs_managed_tags            = false
+      [32m+[0m[0m enable_execute_command             = false
+      [32m+[0m[0m iam_role                           = (known after apply)
+      [32m+[0m[0m id                                 = (known after apply)
+      [32m+[0m[0m launch_type                        = "FARGATE"
+      [32m+[0m[0m name                               = "task-dashboard-secondary-frontend-svc"
+      [32m+[0m[0m platform_version                   = (known after apply)
+      [32m+[0m[0m scheduling_strategy                = "REPLICA"
+      [32m+[0m[0m tags_all                           = (known after apply)
+      [32m+[0m[0m task_definition                    = (known after apply)
+      [32m+[0m[0m triggers                           = (known after apply)
+      [32m+[0m[0m wait_for_steady_state              = false
+
+      [32m+[0m[0m load_balancer {
+          [32m+[0m[0m container_name   = "frontend"
+          [32m+[0m[0m container_port   = 80
+          [32m+[0m[0m target_group_arn = (known after apply)
+        }
+
+      [32m+[0m[0m network_configuration {
+          [32m+[0m[0m assign_public_ip = false
+          [32m+[0m[0m security_groups  = (known after apply)
+          [32m+[0m[0m subnets          = (known after apply)
+        }
+    }
+
+[1m  # aws_ecs_task_definition.primary_backend[0m will be created
+[0m  [32m+[0m[0m resource "aws_ecs_task_definition" "primary_backend" {
+      [32m+[0m[0m arn                      = (known after apply)
+      [32m+[0m[0m arn_without_revision     = (known after apply)
+      [32m+[0m[0m container_definitions    = (sensitive value)
+      [32m+[0m[0m cpu                      = "256"
+      [32m+[0m[0m enable_fault_injection   = (known after apply)
+      [32m+[0m[0m execution_role_arn       = (known after apply)
+      [32m+[0m[0m family                   = "task-dashboard-primary-backend"
+      [32m+[0m[0m id                       = (known after apply)
+      [32m+[0m[0m memory                   = "512"
+      [32m+[0m[0m network_mode             = "awsvpc"
+      [32m+[0m[0m requires_compatibilities = [
+          [32m+[0m[0m "FARGATE",
+        ]
+      [32m+[0m[0m revision                 = (known after apply)
+      [32m+[0m[0m skip_destroy             = false
+      [32m+[0m[0m tags_all                 = (known after apply)
+      [32m+[0m[0m task_role_arn            = (known after apply)
+      [32m+[0m[0m track_latest             = false
+    }
+
+[1m  # aws_ecs_task_definition.primary_frontend[0m will be created
+[0m  [32m+[0m[0m resource "aws_ecs_task_definition" "primary_frontend" {
+      [32m+[0m[0m arn                      = (known after apply)
+      [32m+[0m[0m arn_without_revision     = (known after apply)
+      [32m+[0m[0m container_definitions    = (known after apply)
+      [32m+[0m[0m cpu                      = "256"
+      [32m+[0m[0m enable_fault_injection   = (known after apply)
+      [32m+[0m[0m execution_role_arn       = (known after apply)
+      [32m+[0m[0m family                   = "task-dashboard-primary-frontend"
+      [32m+[0m[0m id                       = (known after apply)
+      [32m+[0m[0m memory                   = "512"
+      [32m+[0m[0m network_mode             = "awsvpc"
+      [32m+[0m[0m requires_compatibilities = [
+          [32m+[0m[0m "FARGATE",
+        ]
+      [32m+[0m[0m revision                 = (known after apply)
+      [32m+[0m[0m skip_destroy             = false
+      [32m+[0m[0m tags_all                 = (known after apply)
+      [32m+[0m[0m task_role_arn            = (known after apply)
+      [32m+[0m[0m track_latest             = false
+    }
+
+[1m  # aws_ecs_task_definition.secondary_backend[0m will be created
+[0m  [32m+[0m[0m resource "aws_ecs_task_definition" "secondary_backend" {
+      [32m+[0m[0m arn                      = (known after apply)
+      [32m+[0m[0m arn_without_revision     = (known after apply)
+      [32m+[0m[0m container_definitions    = (sensitive value)
+      [32m+[0m[0m cpu                      = "256"
+      [32m+[0m[0m enable_fault_injection   = (known after apply)
+      [32m+[0m[0m execution_role_arn       = (known after apply)
+      [32m+[0m[0m family                   = "task-dashboard-secondary-backend"
+      [32m+[0m[0m id                       = (known after apply)
+      [32m+[0m[0m memory                   = "512"
+      [32m+[0m[0m network_mode             = "awsvpc"
+      [32m+[0m[0m requires_compatibilities = [
+          [32m+[0m[0m "FARGATE",
+        ]
+      [32m+[0m[0m revision                 = (known after apply)
+      [32m+[0m[0m skip_destroy             = false
+      [32m+[0m[0m tags_all                 = (known after apply)
+      [32m+[0m[0m task_role_arn            = (known after apply)
+      [32m+[0m[0m track_latest             = false
+    }
+
+[1m  # aws_ecs_task_definition.secondary_frontend[0m will be created
+[0m  [32m+[0m[0m resource "aws_ecs_task_definition" "secondary_frontend" {
+      [32m+[0m[0m arn                      = (known after apply)
+      [32m+[0m[0m arn_without_revision     = (known after apply)
+      [32m+[0m[0m container_definitions    = (known after apply)
+      [32m+[0m[0m cpu                      = "256"
+      [32m+[0m[0m enable_fault_injection   = (known after apply)
+      [32m+[0m[0m execution_role_arn       = (known after apply)
+      [32m+[0m[0m family                   = "task-dashboard-secondary-frontend"
+      [32m+[0m[0m id                       = (known after apply)
+      [32m+[0m[0m memory                   = "512"
+      [32m+[0m[0m network_mode             = "awsvpc"
+      [32m+[0m[0m requires_compatibilities = [
+          [32m+[0m[0m "FARGATE",
+        ]
+      [32m+[0m[0m revision                 = (known after apply)
+      [32m+[0m[0m skip_destroy             = false
+      [32m+[0m[0m tags_all                 = (known after apply)
+      [32m+[0m[0m task_role_arn            = (known after apply)
+      [32m+[0m[0m track_latest             = false
+    }
+
+[1m  # aws_eip.primary_nat[0m will be created
+[0m  [32m+[0m[0m resource "aws_eip" "primary_nat" {
+      [32m+[0m[0m allocation_id        = (known after apply)
+      [32m+[0m[0m arn                  = (known after apply)
+      [32m+[0m[0m association_id       = (known after apply)
+      [32m+[0m[0m carrier_ip           = (known after apply)
+      [32m+[0m[0m customer_owned_ip    = (known after apply)
+      [32m+[0m[0m domain               = "vpc"
+      [32m+[0m[0m id                   = (known after apply)
+      [32m+[0m[0m instance             = (known after apply)
+      [32m+[0m[0m ipam_pool_id         = (known after apply)
+      [32m+[0m[0m network_border_group = (known after apply)
+      [32m+[0m[0m network_interface    = (known after apply)
+      [32m+[0m[0m private_dns          = (known after apply)
+      [32m+[0m[0m private_ip           = (known after apply)
+      [32m+[0m[0m ptr_record           = (known after apply)
+      [32m+[0m[0m public_dns           = (known after apply)
+      [32m+[0m[0m public_ip            = (known after apply)
+      [32m+[0m[0m public_ipv4_pool     = (known after apply)
+      [32m+[0m[0m tags_all             = (known after apply)
+      [32m+[0m[0m vpc                  = (known after apply)
+    }
+
+[1m  # aws_eip.secondary_nat[0m will be created
+[0m  [32m+[0m[0m resource "aws_eip" "secondary_nat" {
+      [32m+[0m[0m allocation_id        = (known after apply)
+      [32m+[0m[0m arn                  = (known after apply)
+      [32m+[0m[0m association_id       = (known after apply)
+      [32m+[0m[0m carrier_ip           = (known after apply)
+      [32m+[0m[0m customer_owned_ip    = (known after apply)
+      [32m+[0m[0m domain               = "vpc"
+      [32m+[0m[0m id                   = (known after apply)
+      [32m+[0m[0m instance             = (known after apply)
+      [32m+[0m[0m ipam_pool_id         = (known after apply)
+      [32m+[0m[0m network_border_group = (known after apply)
+      [32m+[0m[0m network_interface    = (known after apply)
+      [32m+[0m[0m private_dns          = (known after apply)
+      [32m+[0m[0m private_ip           = (known after apply)
+      [32m+[0m[0m ptr_record           = (known after apply)
+      [32m+[0m[0m public_dns           = (known after apply)
+      [32m+[0m[0m public_ip            = (known after apply)
+      [32m+[0m[0m public_ipv4_pool     = (known after apply)
+      [32m+[0m[0m tags_all             = (known after apply)
+      [32m+[0m[0m vpc                  = (known after apply)
+    }
+
+[1m  # aws_iam_role.ecs_task_execution_role[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role" "ecs_task_execution_role" {
+      [32m+[0m[0m arn                   = (known after apply)
+      [32m+[0m[0m assume_role_policy    = jsonencode(
+            {
+              [32m+[0m[0m Statement = [
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "sts:AssumeRole"
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Principal = {
+                          [32m+[0m[0m Service = "ecs-tasks.amazonaws.com"
+                        }
+                    },
+                ]
+              [32m+[0m[0m Version   = "2012-10-17"
+            }
+        )
+      [32m+[0m[0m create_date           = (known after apply)
+      [32m+[0m[0m force_detach_policies = false
+      [32m+[0m[0m id                    = (known after apply)
+      [32m+[0m[0m managed_policy_arns   = (known after apply)
+      [32m+[0m[0m max_session_duration  = 3600
+      [32m+[0m[0m name                  = "task-dashboard-ecs-execution-role"
+      [32m+[0m[0m name_prefix           = (known after apply)
+      [32m+[0m[0m path                  = "/"
+      [32m+[0m[0m tags_all              = (known after apply)
+      [32m+[0m[0m unique_id             = (known after apply)
+    }
+
+[1m  # aws_iam_role.ecs_task_role[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role" "ecs_task_role" {
+      [32m+[0m[0m arn                   = (known after apply)
+      [32m+[0m[0m assume_role_policy    = jsonencode(
+            {
+              [32m+[0m[0m Statement = [
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "sts:AssumeRole"
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Principal = {
+                          [32m+[0m[0m Service = "ecs-tasks.amazonaws.com"
+                        }
+                    },
+                ]
+              [32m+[0m[0m Version   = "2012-10-17"
+            }
+        )
+      [32m+[0m[0m create_date           = (known after apply)
+      [32m+[0m[0m force_detach_policies = false
+      [32m+[0m[0m id                    = (known after apply)
+      [32m+[0m[0m managed_policy_arns   = (known after apply)
+      [32m+[0m[0m max_session_duration  = 3600
+      [32m+[0m[0m name                  = "task-dashboard-ecs-task-role"
+      [32m+[0m[0m name_prefix           = (known after apply)
+      [32m+[0m[0m path                  = "/"
+      [32m+[0m[0m tags_all              = (known after apply)
+      [32m+[0m[0m unique_id             = (known after apply)
+    }
+
+[1m  # aws_iam_role_policy_attachment.ecs_task_execution_role_policy[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+      [32m+[0m[0m role       = "task-dashboard-ecs-execution-role"
+    }
+
+[1m  # aws_internet_gateway.primary_igw[0m will be created
+[0m  [32m+[0m[0m resource "aws_internet_gateway" "primary_igw" {
+      [32m+[0m[0m arn      = (known after apply)
+      [32m+[0m[0m id       = (known after apply)
+      [32m+[0m[0m owner_id = (known after apply)
+      [32m+[0m[0m tags     = {
+          [32m+[0m[0m "Name" = "task-dashboard-primary-igw"
+        }
+      [32m+[0m[0m tags_all = {
+          [32m+[0m[0m "Name" = "task-dashboard-primary-igw"
+        }
+      [32m+[0m[0m vpc_id   = (known after apply)
+    }
+
+[1m  # aws_internet_gateway.secondary_igw[0m will be created
+[0m  [32m+[0m[0m resource "aws_internet_gateway" "secondary_igw" {
+      [32m+[0m[0m arn      = (known after apply)
+      [32m+[0m[0m id       = (known after apply)
+      [32m+[0m[0m owner_id = (known after apply)
+      [32m+[0m[0m tags     = {
+          [32m+[0m[0m "Name" = "task-dashboard-secondary-igw"
+        }
+      [32m+[0m[0m tags_all = {
+          [32m+[0m[0m "Name" = "task-dashboard-secondary-igw"
+        }
+      [32m+[0m[0m vpc_id   = (known after apply)
+    }
+
+[1m  # aws_lb.primary[0m will be created
+[0m  [32m+[0m[0m resource "aws_lb" "primary" {
+      [32m+[0m[0m arn                                                          = (known after apply)
+      [32m+[0m[0m arn_suffix                                                   = (known after apply)
+      [32m+[0m[0m client_keep_alive                                            = 3600
+      [32m+[0m[0m desync_mitigation_mode                                       = "defensive"
+      [32m+[0m[0m dns_name                                                     = (known after apply)
+      [32m+[0m[0m drop_invalid_header_fields                                   = false
+      [32m+[0m[0m enable_deletion_protection                                   = false
+      [32m+[0m[0m enable_http2                                                 = true
+      [32m+[0m[0m enable_tls_version_and_cipher_suite_headers                  = false
+      [32m+[0m[0m enable_waf_fail_open                                         = false
+      [32m+[0m[0m enable_xff_client_port                                       = false
+      [32m+[0m[0m enable_zonal_shift                                           = false
+      [32m+[0m[0m enforce_security_group_inbound_rules_on_private_link_traffic = (known after apply)
+      [32m+[0m[0m id                                                           = (known after apply)
+      [32m+[0m[0m idle_timeout                                                 = 60
+      [32m+[0m[0m internal                                                     = false
+      [32m+[0m[0m ip_address_type                                              = (known after apply)
+      [32m+[0m[0m load_balancer_type                                           = "application"
+      [32m+[0m[0m name                                                         = "task-dashboard-primary-alb"
+      [32m+[0m[0m name_prefix                                                  = (known after apply)
+      [32m+[0m[0m preserve_host_header                                         = false
+      [32m+[0m[0m security_groups                                              = (known after apply)
+      [32m+[0m[0m subnets                                                      = (known after apply)
+      [32m+[0m[0m tags                                                         = {
+          [32m+[0m[0m "Name" = "Primary ALB"
+        }
+      [32m+[0m[0m tags_all                                                     = {
+          [32m+[0m[0m "Name" = "Primary ALB"
+        }
+      [32m+[0m[0m vpc_id                                                       = (known after apply)
+      [32m+[0m[0m xff_header_processing_mode                                   = "append"
+      [32m+[0m[0m zone_id                                                      = (known after apply)
+    }
+
+[1m  # aws_lb.secondary[0m will be created
+[0m  [32m+[0m[0m resource "aws_lb" "secondary" {
+      [32m+[0m[0m arn                                                          = (known after apply)
+      [32m+[0m[0m arn_suffix                                                   = (known after apply)
+      [32m+[0m[0m client_keep_alive                                            = 3600
+      [32m+[0m[0m desync_mitigation_mode                                       = "defensive"
+      [32m+[0m[0m dns_name                                                     = (known after apply)
+      [32m+[0m[0m drop_invalid_header_fields                                   = false
+      [32m+[0m[0m enable_deletion_protection                                   = false
+      [32m+[0m[0m enable_http2                                                 = true
+      [32m+[0m[0m enable_tls_version_and_cipher_suite_headers                  = false
+      [32m+[0m[0m enable_waf_fail_open                                         = false
+      [32m+[0m[0m enable_xff_client_port                                       = false
+      [32m+[0m[0m enable_zonal_shift                                           = false
+      [32m+[0m[0m enforce_security_group_inbound_rules_on_private_link_traffic = (known after apply)
+      [32m+[0m[0m id                                                           = (known after apply)
+      [32m+[0m[0m idle_timeout                                                 = 60
+      [32m+[0m[0m internal                                                     = false
+      [32m+[0m[0m ip_address_type                                              = (known after apply)
+      [32m+[0m[0m load_balancer_type                                           = "application"
+      [32m+[0m[0m name                                                         = "task-dashboard-secondary-alb"
+      [32m+[0m[0m name_prefix                                                  = (known after apply)
+      [32m+[0m[0m preserve_host_header                                         = false
+      [32m+[0m[0m security_groups                                              = (known after apply)
+      [32m+[0m[0m subnets                                                      = (known after apply)
+      [32m+[0m[0m tags                                                         = {
+          [32m+[0m[0m "Name" = "Secondary ALB"
+        }
+      [32m+[0m[0m tags_all                                                     = {
+          [32m+[0m[0m "Name" = "Secondary ALB"
+        }
+      [32m+[0m[0m vpc_id                                                       = (known after apply)
+      [32m+[0m[0m xff_header_processing_mode                                   = "append"
+      [32m+[0m[0m zone_id                                                      = (known after apply)
+    }
+
+[1m  # aws_lb_listener.primary_http[0m will be created
+[0m  [32m+[0m[0m resource "aws_lb_listener" "primary_http" {
+      [32m+[0m[0m arn                                                                   = (known after apply)
+      [32m+[0m[0m id                                                                    = (known after apply)
+      [32m+[0m[0m load_balancer_arn                                                     = (known after apply)
+      [32m+[0m[0m port                                                                  = 80
+      [32m+[0m[0m protocol                                                              = "HTTP"
+      [32m+[0m[0m routing_http_request_x_amzn_mtls_clientcert_header_name               = (known after apply)
+      [32m+[0m[0m routing_http_request_x_amzn_mtls_clientcert_issuer_header_name        = (known after apply)
+      [32m+[0m[0m routing_http_request_x_amzn_mtls_clientcert_leaf_header_name          = (known after apply)
+      [32m+[0m[0m routing_http_request_x_amzn_mtls_clientcert_serial_number_header_name = (known after apply)
+      [32m+[0m[0m routing_http_request_x_amzn_mtls_clientcert_subject_header_name       = (known after apply)
+      [32m+[0m[0m routing_http_request_x_amzn_mtls_clientcert_validity_header_name      = (known after apply)
+      [32m+[0m[0m routing_http_request_x_amzn_tls_cipher_suite_header_name              = (known after apply)
+      [32m+[0m[0m routing_http_request_x_amzn_tls_version_header_name                   = (known after apply)
+      [32m+[0m[0m routing_http_response_access_control_allow_credentials_header_value   = (known after apply)
+      [32m+[0m[0m routing_http_response_access_control_allow_headers_header_value       = (known after apply)
+      [32m+[0m[0m routing_http_response_access_control_allow_methods_header_value       = (known after apply)
+      [32m+[0m[0m routing_http_response_access_control_allow_origin_header_value        = (known after apply)
+      [32m+[0m[0m routing_http_response_access_control_expose_headers_header_value      = (known after apply)
+      [32m+[0m[0m routing_http_response_access_control_max_age_header_value             = (known after apply)
+      [32m+[0m[0m routing_http_response_content_security_policy_header_value            = (known after apply)
+      [32m+[0m[0m routing_http_response_server_enabled                                  = (known after apply)
+      [32m+[0m[0m routing_http_response_strict_transport_security_header_value          = (known after apply)
+      [32m+[0m[0m routing_http_response_x_content_type_options_header_value             = (known after apply)
+      [32m+[0m[0m routing_http_response_x_frame_options_header_value                    = (known after apply)
+      [32m+[0m[0m ssl_policy                                                            = (known after apply)
+      [32m+[0m[0m tags_all                                                              = (known after apply)
+      [32m+[0m[0m tcp_idle_timeout_seconds                                              = (known after apply)
+
+      [32m+[0m[0m default_action {
+          [32m+[0m[0m order            = (known after apply)
+          [32m+[0m[0m target_group_arn = (known after apply)
+          [32m+[0m[0m type             = "forward"
+        }
+    }
+
+[1m  # aws_lb_listener.secondary_http[0m will be created
+[0m  [32m+[0m[0m resource "aws_lb_listener" "secondary_http" {
+      [32m+[0m[0m arn                                                                   = (known after apply)
+      [32m+[0m[0m id                                                                    = (known after apply)
+      [32m+[0m[0m load_balancer_arn                                                     = (known after apply)
+      [32m+[0m[0m port                                                                  = 80
+      [32m+[0m[0m protocol                                                              = "HTTP"
+      [32m+[0m[0m routing_http_request_x_amzn_mtls_clientcert_header_name               = (known after apply)
+      [32m+[0m[0m routing_http_request_x_amzn_mtls_clientcert_issuer_header_name        = (known after apply)
+      [32m+[0m[0m routing_http_request_x_amzn_mtls_clientcert_leaf_header_name          = (known after apply)
+      [32m+[0m[0m routing_http_request_x_amzn_mtls_clientcert_serial_number_header_name = (known after apply)
+      [32m+[0m[0m routing_http_request_x_amzn_mtls_clientcert_subject_header_name       = (known after apply)
+      [32m+[0m[0m routing_http_request_x_amzn_mtls_clientcert_validity_header_name      = (known after apply)
+      [32m+[0m[0m routing_http_request_x_amzn_tls_cipher_suite_header_name              = (known after apply)
+      [32m+[0m[0m routing_http_request_x_amzn_tls_version_header_name                   = (known after apply)
+      [32m+[0m[0m routing_http_response_access_control_allow_credentials_header_value   = (known after apply)
+      [32m+[0m[0m routing_http_response_access_control_allow_headers_header_value       = (known after apply)
+      [32m+[0m[0m routing_http_response_access_control_allow_methods_header_value       = (known after apply)
+      [32m+[0m[0m routing_http_response_access_control_allow_origin_header_value        = (known after apply)
+      [32m+[0m[0m routing_http_response_access_control_expose_headers_header_value      = (known after apply)
+      [32m+[0m[0m routing_http_response_access_control_max_age_header_value             = (known after apply)
+      [32m+[0m[0m routing_http_response_content_security_policy_header_value            = (known after apply)
+      [32m+[0m[0m routing_http_response_server_enabled                                  = (known after apply)
+      [32m+[0m[0m routing_http_response_strict_transport_security_header_value          = (known after apply)
+      [32m+[0m[0m routing_http_response_x_content_type_options_header_value             = (known after apply)
+      [32m+[0m[0m routing_http_response_x_frame_options_header_value                    = (known after apply)
+      [32m+[0m[0m ssl_policy                                                            = (known after apply)
+      [32m+[0m[0m tags_all                                                              = (known after apply)
+      [32m+[0m[0m tcp_idle_timeout_seconds                                              = (known after apply)
+
+      [32m+[0m[0m default_action {
+          [32m+[0m[0m order            = (known after apply)
+          [32m+[0m[0m target_group_arn = (known after apply)
+          [32m+[0m[0m type             = "forward"
+        }
+    }
+
+[1m  # aws_lb_listener_rule.primary_api[0m will be created
+[0m  [32m+[0m[0m resource "aws_lb_listener_rule" "primary_api" {
+      [32m+[0m[0m arn          = (known after apply)
+      [32m+[0m[0m id           = (known after apply)
+      [32m+[0m[0m listener_arn = (known after apply)
+      [32m+[0m[0m priority     = 100
+      [32m+[0m[0m tags_all     = (known after apply)
+
+      [32m+[0m[0m action {
+          [32m+[0m[0m order            = (known after apply)
+          [32m+[0m[0m target_group_arn = (known after apply)
+          [32m+[0m[0m type             = "forward"
+        }
+
+      [32m+[0m[0m condition {
+          [32m+[0m[0m path_pattern {
+              [32m+[0m[0m values = [
+                  [32m+[0m[0m "/api/*",
+                ]
+            }
+        }
+    }
+
+[1m  # aws_lb_listener_rule.secondary_api[0m will be created
+[0m  [32m+[0m[0m resource "aws_lb_listener_rule" "secondary_api" {
+      [32m+[0m[0m arn          = (known after apply)
+      [32m+[0m[0m id           = (known after apply)
+      [32m+[0m[0m listener_arn = (known after apply)
+      [32m+[0m[0m priority     = 100
+      [32m+[0m[0m tags_all     = (known after apply)
+
+      [32m+[0m[0m action {
+          [32m+[0m[0m order            = (known after apply)
+          [32m+[0m[0m target_group_arn = (known after apply)
+          [32m+[0m[0m type             = "forward"
+        }
+
+      [32m+[0m[0m condition {
+          [32m+[0m[0m path_pattern {
+              [32m+[0m[0m values = [
+                  [32m+[0m[0m "/api/*",
+                ]
+            }
+        }
+    }
+
+[1m  # aws_lb_target_group.primary_backend[0m will be created
+[0m  [32m+[0m[0m resource "aws_lb_target_group" "primary_backend" {
+      [32m+[0m[0m arn                                = (known after apply)
+      [32m+[0m[0m arn_suffix                         = (known after apply)
+      [32m+[0m[0m connection_termination             = (known after apply)
+      [32m+[0m[0m deregistration_delay               = "300"
+      [32m+[0m[0m id                                 = (known after apply)
+      [32m+[0m[0m ip_address_type                    = (known after apply)
+      [32m+[0m[0m lambda_multi_value_headers_enabled = false
+      [32m+[0m[0m load_balancer_arns                 = (known after apply)
+      [32m+[0m[0m load_balancing_algorithm_type      = (known after apply)
+      [32m+[0m[0m load_balancing_anomaly_mitigation  = (known after apply)
+      [32m+[0m[0m load_balancing_cross_zone_enabled  = (known after apply)
+      [32m+[0m[0m name                               = "task-dashboard-pri-be-tg"
+      [32m+[0m[0m name_prefix                        = (known after apply)
+      [32m+[0m[0m port                               = 3000
+      [32m+[0m[0m preserve_client_ip                 = (known after apply)
+      [32m+[0m[0m protocol                           = "HTTP"
+      [32m+[0m[0m protocol_version                   = (known after apply)
+      [32m+[0m[0m proxy_protocol_v2                  = false
+      [32m+[0m[0m slow_start                         = 0
+      [32m+[0m[0m tags_all                           = (known after apply)
+      [32m+[0m[0m target_type                        = "ip"
+      [32m+[0m[0m vpc_id                             = (known after apply)
+
+      [32m+[0m[0m health_check {
+          [32m+[0m[0m enabled             = true
+          [32m+[0m[0m healthy_threshold   = 3
+          [32m+[0m[0m interval            = 30
+          [32m+[0m[0m matcher             = (known after apply)
+          [32m+[0m[0m path                = "/health"
+          [32m+[0m[0m port                = "traffic-port"
+          [32m+[0m[0m protocol            = "HTTP"
+          [32m+[0m[0m timeout             = (known after apply)
+          [32m+[0m[0m unhealthy_threshold = 3
+        }
+    }
+
+[1m  # aws_lb_target_group.primary_frontend[0m will be created
+[0m  [32m+[0m[0m resource "aws_lb_target_group" "primary_frontend" {
+      [32m+[0m[0m arn                                = (known after apply)
+      [32m+[0m[0m arn_suffix                         = (known after apply)
+      [32m+[0m[0m connection_termination             = (known after apply)
+      [32m+[0m[0m deregistration_delay               = "300"
+      [32m+[0m[0m id                                 = (known after apply)
+      [32m+[0m[0m ip_address_type                    = (known after apply)
+      [32m+[0m[0m lambda_multi_value_headers_enabled = false
+      [32m+[0m[0m load_balancer_arns                 = (known after apply)
+      [32m+[0m[0m load_balancing_algorithm_type      = (known after apply)
+      [32m+[0m[0m load_balancing_anomaly_mitigation  = (known after apply)
+      [32m+[0m[0m load_balancing_cross_zone_enabled  = (known after apply)
+      [32m+[0m[0m name                               = "task-dashboard-pri-fe-tg"
+      [32m+[0m[0m name_prefix                        = (known after apply)
+      [32m+[0m[0m port                               = 80
+      [32m+[0m[0m preserve_client_ip                 = (known after apply)
+      [32m+[0m[0m protocol                           = "HTTP"
+      [32m+[0m[0m protocol_version                   = (known after apply)
+      [32m+[0m[0m proxy_protocol_v2                  = false
+      [32m+[0m[0m slow_start                         = 0
+      [32m+[0m[0m tags_all                           = (known after apply)
+      [32m+[0m[0m target_type                        = "ip"
+      [32m+[0m[0m vpc_id                             = (known after apply)
+
+      [32m+[0m[0m health_check {
+          [32m+[0m[0m enabled             = true
+          [32m+[0m[0m healthy_threshold   = 3
+          [32m+[0m[0m interval            = 30
+          [32m+[0m[0m matcher             = (known after apply)
+          [32m+[0m[0m path                = "/"
+          [32m+[0m[0m port                = "traffic-port"
+          [32m+[0m[0m protocol            = "HTTP"
+          [32m+[0m[0m timeout             = (known after apply)
+          [32m+[0m[0m unhealthy_threshold = 3
+        }
+    }
+
+[1m  # aws_lb_target_group.secondary_backend[0m will be created
+[0m  [32m+[0m[0m resource "aws_lb_target_group" "secondary_backend" {
+      [32m+[0m[0m arn                                = (known after apply)
+      [32m+[0m[0m arn_suffix                         = (known after apply)
+      [32m+[0m[0m connection_termination             = (known after apply)
+      [32m+[0m[0m deregistration_delay               = "300"
+      [32m+[0m[0m id                                 = (known after apply)
+      [32m+[0m[0m ip_address_type                    = (known after apply)
+      [32m+[0m[0m lambda_multi_value_headers_enabled = false
+      [32m+[0m[0m load_balancer_arns                 = (known after apply)
+      [32m+[0m[0m load_balancing_algorithm_type      = (known after apply)
+      [32m+[0m[0m load_balancing_anomaly_mitigation  = (known after apply)
+      [32m+[0m[0m load_balancing_cross_zone_enabled  = (known after apply)
+      [32m+[0m[0m name                               = "task-dashboard-sec-be-tg"
+      [32m+[0m[0m name_prefix                        = (known after apply)
+      [32m+[0m[0m port                               = 3000
+      [32m+[0m[0m preserve_client_ip                 = (known after apply)
+      [32m+[0m[0m protocol                           = "HTTP"
+      [32m+[0m[0m protocol_version                   = (known after apply)
+      [32m+[0m[0m proxy_protocol_v2                  = false
+      [32m+[0m[0m slow_start                         = 0
+      [32m+[0m[0m tags_all                           = (known after apply)
+      [32m+[0m[0m target_type                        = "ip"
+      [32m+[0m[0m vpc_id                             = (known after apply)
+
+      [32m+[0m[0m health_check {
+          [32m+[0m[0m enabled             = true
+          [32m+[0m[0m healthy_threshold   = 3
+          [32m+[0m[0m interval            = 30
+          [32m+[0m[0m matcher             = (known after apply)
+          [32m+[0m[0m path                = "/health"
+          [32m+[0m[0m port                = "traffic-port"
+          [32m+[0m[0m protocol            = "HTTP"
+          [32m+[0m[0m timeout             = (known after apply)
+          [32m+[0m[0m unhealthy_threshold = 3
+        }
+    }
+
+[1m  # aws_lb_target_group.secondary_frontend[0m will be created
+[0m  [32m+[0m[0m resource "aws_lb_target_group" "secondary_frontend" {
+      [32m+[0m[0m arn                                = (known after apply)
+      [32m+[0m[0m arn_suffix                         = (known after apply)
+      [32m+[0m[0m connection_termination             = (known after apply)
+      [32m+[0m[0m deregistration_delay               = "300"
+      [32m+[0m[0m id                                 = (known after apply)
+      [32m+[0m[0m ip_address_type                    = (known after apply)
+      [32m+[0m[0m lambda_multi_value_headers_enabled = false
+      [32m+[0m[0m load_balancer_arns                 = (known after apply)
+      [32m+[0m[0m load_balancing_algorithm_type      = (known after apply)
+      [32m+[0m[0m load_balancing_anomaly_mitigation  = (known after apply)
+      [32m+[0m[0m load_balancing_cross_zone_enabled  = (known after apply)
+      [32m+[0m[0m name                               = "task-dashboard-sec-fe-tg"
+      [32m+[0m[0m name_prefix                        = (known after apply)
+      [32m+[0m[0m port                               = 80
+      [32m+[0m[0m preserve_client_ip                 = (known after apply)
+      [32m+[0m[0m protocol                           = "HTTP"
+      [32m+[0m[0m protocol_version                   = (known after apply)
+      [32m+[0m[0m proxy_protocol_v2                  = false
+      [32m+[0m[0m slow_start                         = 0
+      [32m+[0m[0m tags_all                           = (known after apply)
+      [32m+[0m[0m target_type                        = "ip"
+      [32m+[0m[0m vpc_id                             = (known after apply)
+
+      [32m+[0m[0m health_check {
+          [32m+[0m[0m enabled             = true
+          [32m+[0m[0m healthy_threshold   = 3
+          [32m+[0m[0m interval            = 30
+          [32m+[0m[0m matcher             = (known after apply)
+          [32m+[0m[0m path                = "/"
+          [32m+[0m[0m port                = "traffic-port"
+          [32m+[0m[0m protocol            = "HTTP"
+          [32m+[0m[0m timeout             = (known after apply)
+          [32m+[0m[0m unhealthy_threshold = 3
+        }
+    }
+
+[1m  # aws_nat_gateway.primary_nat[0m will be created
+[0m  [32m+[0m[0m resource "aws_nat_gateway" "primary_nat" {
+      [32m+[0m[0m allocation_id                      = (known after apply)
+      [32m+[0m[0m association_id                     = (known after apply)
+      [32m+[0m[0m connectivity_type                  = "public"
+      [32m+[0m[0m id                                 = (known after apply)
+      [32m+[0m[0m network_interface_id               = (known after apply)
+      [32m+[0m[0m private_ip                         = (known after apply)
+      [32m+[0m[0m public_ip                          = (known after apply)
+      [32m+[0m[0m secondary_private_ip_address_count = (known after apply)
+      [32m+[0m[0m secondary_private_ip_addresses     = (known after apply)
+      [32m+[0m[0m subnet_id                          = (known after apply)
+      [32m+[0m[0m tags                               = {
+          [32m+[0m[0m "Name" = "task-dashboard-primary-nat"
+        }
+      [32m+[0m[0m tags_all                           = {
+          [32m+[0m[0m "Name" = "task-dashboard-primary-nat"
+        }
+    }
+
+[1m  # aws_nat_gateway.secondary_nat[0m will be created
+[0m  [32m+[0m[0m resource "aws_nat_gateway" "secondary_nat" {
+      [32m+[0m[0m allocation_id                      = (known after apply)
+      [32m+[0m[0m association_id                     = (known after apply)
+      [32m+[0m[0m connectivity_type                  = "public"
+      [32m+[0m[0m id                                 = (known after apply)
+      [32m+[0m[0m network_interface_id               = (known after apply)
+      [32m+[0m[0m private_ip                         = (known after apply)
+      [32m+[0m[0m public_ip                          = (known after apply)
+      [32m+[0m[0m secondary_private_ip_address_count = (known after apply)
+      [32m+[0m[0m secondary_private_ip_addresses     = (known after apply)
+      [32m+[0m[0m subnet_id                          = (known after apply)
+      [32m+[0m[0m tags                               = {
+          [32m+[0m[0m "Name" = "task-dashboard-secondary-nat"
+        }
+      [32m+[0m[0m tags_all                           = {
+          [32m+[0m[0m "Name" = "task-dashboard-secondary-nat"
+        }
+    }
+
+[1m  # aws_route53_health_check.primary[0m will be created
+[0m  [32m+[0m[0m resource "aws_route53_health_check" "primary" {
+      [32m+[0m[0m arn               = (known after apply)
+      [32m+[0m[0m disabled          = false
+      [32m+[0m[0m enable_sni        = (known after apply)
+      [32m+[0m[0m failure_threshold = 3
+      [32m+[0m[0m fqdn              = (known after apply)
+      [32m+[0m[0m id                = (known after apply)
+      [32m+[0m[0m measure_latency   = false
+      [32m+[0m[0m port              = 80
+      [32m+[0m[0m request_interval  = 30
+      [32m+[0m[0m resource_path     = "/"
+      [32m+[0m[0m tags              = {
+          [32m+[0m[0m "Name" = "task-dashboard-primary-hc"
+        }
+      [32m+[0m[0m tags_all          = {
+          [32m+[0m[0m "Name" = "task-dashboard-primary-hc"
+        }
+      [32m+[0m[0m triggers          = (known after apply)
+      [32m+[0m[0m type              = "HTTP"
+    }
+
+[1m  # aws_route53_health_check.secondary[0m will be created
+[0m  [32m+[0m[0m resource "aws_route53_health_check" "secondary" {
+      [32m+[0m[0m arn               = (known after apply)
+      [32m+[0m[0m disabled          = false
+      [32m+[0m[0m enable_sni        = (known after apply)
+      [32m+[0m[0m failure_threshold = 3
+      [32m+[0m[0m fqdn              = (known after apply)
+      [32m+[0m[0m id                = (known after apply)
+      [32m+[0m[0m measure_latency   = false
+      [32m+[0m[0m port              = 80
+      [32m+[0m[0m request_interval  = 30
+      [32m+[0m[0m resource_path     = "/"
+      [32m+[0m[0m tags              = {
+          [32m+[0m[0m "Name" = "task-dashboard-secondary-hc"
+        }
+      [32m+[0m[0m tags_all          = {
+          [32m+[0m[0m "Name" = "task-dashboard-secondary-hc"
+        }
+      [32m+[0m[0m triggers          = (known after apply)
+      [32m+[0m[0m type              = "HTTP"
+    }
+
+[1m  # aws_route53_record.app_primary[0m will be created
+[0m  [32m+[0m[0m resource "aws_route53_record" "app_primary" {
+      [32m+[0m[0m allow_overwrite = (known after apply)
+      [32m+[0m[0m fqdn            = (known after apply)
+      [32m+[0m[0m health_check_id = (known after apply)
+      [32m+[0m[0m id              = (known after apply)
+      [32m+[0m[0m name            = "app.example.com"
+      [32m+[0m[0m set_identifier  = "primary-us-east-1"
+      [32m+[0m[0m type            = "A"
+      [32m+[0m[0m zone_id         = (known after apply)
+
+      [32m+[0m[0m alias {
+          [32m+[0m[0m evaluate_target_health = true
+          [32m+[0m[0m name                   = (known after apply)
+          [32m+[0m[0m zone_id                = (known after apply)
+        }
+
+      [32m+[0m[0m latency_routing_policy {
+          [32m+[0m[0m region = "us-east-1"
+        }
+    }
+
+[1m  # aws_route53_record.app_secondary[0m will be created
+[0m  [32m+[0m[0m resource "aws_route53_record" "app_secondary" {
+      [32m+[0m[0m allow_overwrite = (known after apply)
+      [32m+[0m[0m fqdn            = (known after apply)
+      [32m+[0m[0m health_check_id = (known after apply)
+      [32m+[0m[0m id              = (known after apply)
+      [32m+[0m[0m name            = "app.example.com"
+      [32m+[0m[0m set_identifier  = "secondary-us-east-2"
+      [32m+[0m[0m type            = "A"
+      [32m+[0m[0m zone_id         = (known after apply)
+
+      [32m+[0m[0m alias {
+          [32m+[0m[0m evaluate_target_health = true
+          [32m+[0m[0m name                   = (known after apply)
+          [32m+[0m[0m zone_id                = (known after apply)
+        }
+
+      [32m+[0m[0m latency_routing_policy {
+          [32m+[0m[0m region = "us-east-2"
+        }
+    }
+
+[1m  # aws_route53_zone.main[0m will be created
+[0m  [32m+[0m[0m resource "aws_route53_zone" "main" {
+      [32m+[0m[0m arn                 = (known after apply)
+      [32m+[0m[0m comment             = "Managed by Terraform"
+      [32m+[0m[0m force_destroy       = false
+      [32m+[0m[0m id                  = (known after apply)
+      [32m+[0m[0m name                = "example.com"
+      [32m+[0m[0m name_servers        = (known after apply)
+      [32m+[0m[0m primary_name_server = (known after apply)
+      [32m+[0m[0m tags_all            = (known after apply)
+      [32m+[0m[0m zone_id             = (known after apply)
+    }
+
+[1m  # aws_route_table.primary_private[0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table" "primary_private" {
+      [32m+[0m[0m arn              = (known after apply)
+      [32m+[0m[0m id               = (known after apply)
+      [32m+[0m[0m owner_id         = (known after apply)
+      [32m+[0m[0m propagating_vgws = (known after apply)
+      [32m+[0m[0m route            = [
+          [32m+[0m[0m {
+              [32m+[0m[0m carrier_gateway_id         = ""
+              [32m+[0m[0m cidr_block                 = "0.0.0.0/0"
+              [32m+[0m[0m core_network_arn           = ""
+              [32m+[0m[0m destination_prefix_list_id = ""
+              [32m+[0m[0m egress_only_gateway_id     = ""
+              [32m+[0m[0m gateway_id                 = ""
+              [32m+[0m[0m ipv6_cidr_block            = ""
+              [32m+[0m[0m local_gateway_id           = ""
+              [32m+[0m[0m nat_gateway_id             = (known after apply)
+              [32m+[0m[0m network_interface_id       = ""
+              [32m+[0m[0m transit_gateway_id         = ""
+              [32m+[0m[0m vpc_endpoint_id            = ""
+              [32m+[0m[0m vpc_peering_connection_id  = ""
+            },
+        ]
+      [32m+[0m[0m tags             = {
+          [32m+[0m[0m "Name" = "task-dashboard-primary-private-rt"
+        }
+      [32m+[0m[0m tags_all         = {
+          [32m+[0m[0m "Name" = "task-dashboard-primary-private-rt"
+        }
+      [32m+[0m[0m vpc_id           = (known after apply)
+    }
+
+[1m  # aws_route_table.primary_public[0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table" "primary_public" {
+      [32m+[0m[0m arn              = (known after apply)
+      [32m+[0m[0m id               = (known after apply)
+      [32m+[0m[0m owner_id         = (known after apply)
+      [32m+[0m[0m propagating_vgws = (known after apply)
+      [32m+[0m[0m route            = [
+          [32m+[0m[0m {
+              [32m+[0m[0m carrier_gateway_id         = ""
+              [32m+[0m[0m cidr_block                 = "0.0.0.0/0"
+              [32m+[0m[0m core_network_arn           = ""
+              [32m+[0m[0m destination_prefix_list_id = ""
+              [32m+[0m[0m egress_only_gateway_id     = ""
+              [32m+[0m[0m gateway_id                 = (known after apply)
+              [32m+[0m[0m ipv6_cidr_block            = ""
+              [32m+[0m[0m local_gateway_id           = ""
+              [32m+[0m[0m nat_gateway_id             = ""
+              [32m+[0m[0m network_interface_id       = ""
+              [32m+[0m[0m transit_gateway_id         = ""
+              [32m+[0m[0m vpc_endpoint_id            = ""
+              [32m+[0m[0m vpc_peering_connection_id  = ""
+            },
+        ]
+      [32m+[0m[0m tags             = {
+          [32m+[0m[0m "Name" = "task-dashboard-primary-public-rt"
+        }
+      [32m+[0m[0m tags_all         = {
+          [32m+[0m[0m "Name" = "task-dashboard-primary-public-rt"
+        }
+      [32m+[0m[0m vpc_id           = (known after apply)
+    }
+
+[1m  # aws_route_table.secondary_private[0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table" "secondary_private" {
+      [32m+[0m[0m arn              = (known after apply)
+      [32m+[0m[0m id               = (known after apply)
+      [32m+[0m[0m owner_id         = (known after apply)
+      [32m+[0m[0m propagating_vgws = (known after apply)
+      [32m+[0m[0m route            = [
+          [32m+[0m[0m {
+              [32m+[0m[0m carrier_gateway_id         = ""
+              [32m+[0m[0m cidr_block                 = "0.0.0.0/0"
+              [32m+[0m[0m core_network_arn           = ""
+              [32m+[0m[0m destination_prefix_list_id = ""
+              [32m+[0m[0m egress_only_gateway_id     = ""
+              [32m+[0m[0m gateway_id                 = ""
+              [32m+[0m[0m ipv6_cidr_block            = ""
+              [32m+[0m[0m local_gateway_id           = ""
+              [32m+[0m[0m nat_gateway_id             = (known after apply)
+              [32m+[0m[0m network_interface_id       = ""
+              [32m+[0m[0m transit_gateway_id         = ""
+              [32m+[0m[0m vpc_endpoint_id            = ""
+              [32m+[0m[0m vpc_peering_connection_id  = ""
+            },
+        ]
+      [32m+[0m[0m tags             = {
+          [32m+[0m[0m "Name" = "task-dashboard-secondary-private-rt"
+        }
+      [32m+[0m[0m tags_all         = {
+          [32m+[0m[0m "Name" = "task-dashboard-secondary-private-rt"
+        }
+      [32m+[0m[0m vpc_id           = (known after apply)
+    }
+
+[1m  # aws_route_table.secondary_public[0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table" "secondary_public" {
+      [32m+[0m[0m arn              = (known after apply)
+      [32m+[0m[0m id               = (known after apply)
+      [32m+[0m[0m owner_id         = (known after apply)
+      [32m+[0m[0m propagating_vgws = (known after apply)
+      [32m+[0m[0m route            = [
+          [32m+[0m[0m {
+              [32m+[0m[0m carrier_gateway_id         = ""
+              [32m+[0m[0m cidr_block                 = "0.0.0.0/0"
+              [32m+[0m[0m core_network_arn           = ""
+              [32m+[0m[0m destination_prefix_list_id = ""
+              [32m+[0m[0m egress_only_gateway_id     = ""
+              [32m+[0m[0m gateway_id                 = (known after apply)
+              [32m+[0m[0m ipv6_cidr_block            = ""
+              [32m+[0m[0m local_gateway_id           = ""
+              [32m+[0m[0m nat_gateway_id             = ""
+              [32m+[0m[0m network_interface_id       = ""
+              [32m+[0m[0m transit_gateway_id         = ""
+              [32m+[0m[0m vpc_endpoint_id            = ""
+              [32m+[0m[0m vpc_peering_connection_id  = ""
+            },
+        ]
+      [32m+[0m[0m tags             = {
+          [32m+[0m[0m "Name" = "task-dashboard-secondary-public-rt"
+        }
+      [32m+[0m[0m tags_all         = {
+          [32m+[0m[0m "Name" = "task-dashboard-secondary-public-rt"
+        }
+      [32m+[0m[0m vpc_id           = (known after apply)
+    }
+
+[1m  # aws_route_table_association.primary_private_rta[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "primary_private_rta" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # aws_route_table_association.primary_private_rta[1][0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "primary_private_rta" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # aws_route_table_association.primary_public_rta[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "primary_public_rta" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # aws_route_table_association.primary_public_rta[1][0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "primary_public_rta" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # aws_route_table_association.secondary_private_rta[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "secondary_private_rta" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # aws_route_table_association.secondary_private_rta[1][0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "secondary_private_rta" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # aws_route_table_association.secondary_public_rta[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "secondary_public_rta" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # aws_route_table_association.secondary_public_rta[1][0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "secondary_public_rta" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # aws_security_group.primary_alb_sg[0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "primary_alb_sg" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Allow HTTP inbound traffic"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = ""
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "HTTP from anywhere"
+              [32m+[0m[0m from_port        = 80
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 80
+            },
+        ]
+      [32m+[0m[0m name                   = "task-dashboard-primary-alb-sg"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = (known after apply)
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # aws_security_group.primary_ecs_sg[0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "primary_ecs_sg" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Allow traffic from ALB to ECS"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = ""
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Traffic from ALB"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = (known after apply)
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 65535
+            },
+        ]
+      [32m+[0m[0m name                   = "task-dashboard-primary-ecs-sg"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = (known after apply)
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # aws_security_group.primary_rds_sg[0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "primary_rds_sg" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Allow DB traffic from ECS"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = ""
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "PostgreSQL from ECS"
+              [32m+[0m[0m from_port        = 5432
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = (known after apply)
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 5432
+            },
+        ]
+      [32m+[0m[0m name                   = "task-dashboard-primary-rds-sg"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = (known after apply)
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # aws_security_group.secondary_alb_sg[0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "secondary_alb_sg" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Allow HTTP inbound traffic"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = ""
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "HTTP from anywhere"
+              [32m+[0m[0m from_port        = 80
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 80
+            },
+        ]
+      [32m+[0m[0m name                   = "task-dashboard-secondary-alb-sg"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = (known after apply)
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # aws_security_group.secondary_ecs_sg[0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "secondary_ecs_sg" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Allow traffic from ALB to ECS"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = ""
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Traffic from ALB"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = (known after apply)
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 65535
+            },
+        ]
+      [32m+[0m[0m name                   = "task-dashboard-secondary-ecs-sg"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = (known after apply)
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # aws_security_group.secondary_rds_sg[0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "secondary_rds_sg" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Allow DB traffic from ECS"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = ""
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "PostgreSQL from ECS"
+              [32m+[0m[0m from_port        = 5432
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = (known after apply)
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 5432
+            },
+        ]
+      [32m+[0m[0m name                   = "task-dashboard-secondary-rds-sg"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = (known after apply)
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # aws_subnet.primary_private[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "primary_private" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = false
+      [32m+[0m[0m availability_zone                              = "us-east-1a"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.0.2.0/24"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = false
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Name" = "task-dashboard-primary-private-1"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Name" = "task-dashboard-primary-private-1"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # aws_subnet.primary_private[1][0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "primary_private" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = false
+      [32m+[0m[0m availability_zone                              = "us-east-1b"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.0.3.0/24"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = false
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Name" = "task-dashboard-primary-private-2"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Name" = "task-dashboard-primary-private-2"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # aws_subnet.primary_public[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "primary_public" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = false
+      [32m+[0m[0m availability_zone                              = "us-east-1a"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.0.0.0/24"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = true
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Name" = "task-dashboard-primary-public-1"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Name" = "task-dashboard-primary-public-1"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # aws_subnet.primary_public[1][0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "primary_public" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = false
+      [32m+[0m[0m availability_zone                              = "us-east-1b"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.0.1.0/24"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = true
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Name" = "task-dashboard-primary-public-2"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Name" = "task-dashboard-primary-public-2"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # aws_subnet.secondary_private[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "secondary_private" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = false
+      [32m+[0m[0m availability_zone                              = "us-east-2a"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.1.2.0/24"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = false
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Name" = "task-dashboard-secondary-private-1"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Name" = "task-dashboard-secondary-private-1"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # aws_subnet.secondary_private[1][0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "secondary_private" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = false
+      [32m+[0m[0m availability_zone                              = "us-east-2b"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.1.3.0/24"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = false
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Name" = "task-dashboard-secondary-private-2"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Name" = "task-dashboard-secondary-private-2"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # aws_subnet.secondary_public[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "secondary_public" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = false
+      [32m+[0m[0m availability_zone                              = "us-east-2a"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.1.0.0/24"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = true
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Name" = "task-dashboard-secondary-public-1"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Name" = "task-dashboard-secondary-public-1"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # aws_subnet.secondary_public[1][0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "secondary_public" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = false
+      [32m+[0m[0m availability_zone                              = "us-east-2b"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.1.1.0/24"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = true
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Name" = "task-dashboard-secondary-public-2"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Name" = "task-dashboard-secondary-public-2"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # aws_vpc.primary[0m will be created
+[0m  [32m+[0m[0m resource "aws_vpc" "primary" {
+      [32m+[0m[0m arn                                  = (known after apply)
+      [32m+[0m[0m cidr_block                           = "10.0.0.0/16"
+      [32m+[0m[0m default_network_acl_id               = (known after apply)
+      [32m+[0m[0m default_route_table_id               = (known after apply)
+      [32m+[0m[0m default_security_group_id            = (known after apply)
+      [32m+[0m[0m dhcp_options_id                      = (known after apply)
+      [32m+[0m[0m enable_dns_hostnames                 = true
+      [32m+[0m[0m enable_dns_support                   = true
+      [32m+[0m[0m enable_network_address_usage_metrics = (known after apply)
+      [32m+[0m[0m id                                   = (known after apply)
+      [32m+[0m[0m instance_tenancy                     = "default"
+      [32m+[0m[0m ipv6_association_id                  = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block                      = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_network_border_group = (known after apply)
+      [32m+[0m[0m main_route_table_id                  = (known after apply)
+      [32m+[0m[0m owner_id                             = (known after apply)
+      [32m+[0m[0m tags                                 = {
+          [32m+[0m[0m "Name" = "task-dashboard-primary-vpc"
+        }
+      [32m+[0m[0m tags_all                             = {
+          [32m+[0m[0m "Name" = "task-dashboard-primary-vpc"
+        }
+    }
+
+[1m  # aws_vpc.secondary[0m will be created
+[0m  [32m+[0m[0m resource "aws_vpc" "secondary" {
+      [32m+[0m[0m arn                                  = (known after apply)
+      [32m+[0m[0m cidr_block                           = "10.1.0.0/16"
+      [32m+[0m[0m default_network_acl_id               = (known after apply)
+      [32m+[0m[0m default_route_table_id               = (known after apply)
+      [32m+[0m[0m default_security_group_id            = (known after apply)
+      [32m+[0m[0m dhcp_options_id                      = (known after apply)
+      [32m+[0m[0m enable_dns_hostnames                 = true
+      [32m+[0m[0m enable_dns_support                   = true
+      [32m+[0m[0m enable_network_address_usage_metrics = (known after apply)
+      [32m+[0m[0m id                                   = (known after apply)
+      [32m+[0m[0m instance_tenancy                     = "default"
+      [32m+[0m[0m ipv6_association_id                  = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block                      = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_network_border_group = (known after apply)
+      [32m+[0m[0m main_route_table_id                  = (known after apply)
+      [32m+[0m[0m owner_id                             = (known after apply)
+      [32m+[0m[0m tags                                 = {
+          [32m+[0m[0m "Name" = "task-dashboard-secondary-vpc"
+        }
+      [32m+[0m[0m tags_all                             = {
+          [32m+[0m[0m "Name" = "task-dashboard-secondary-vpc"
+        }
+    }
+
+[1mPlan:[0m 72 to add, 0 to change, 0 to destroy.
+[0m
+Changes to Outputs:
+  [32m+[0m[0m ecr_repository_backend  = (known after apply)
+  [32m+[0m[0m ecr_repository_frontend = (known after apply)
+  [32m+[0m[0m primary_alb_dns         = (known after apply)
+  [32m+[0m[0m route53_app_url         = "http://app.example.com"
+  [32m+[0m[0m secondary_alb_dns       = (known after apply)
+[0m[1maws_cloudwatch_log_group.ecs_logs_secondary: Creating...[0m[0m
+[0m[1maws_vpc.secondary: Creating...[0m[0m
+[0m[1maws_eip.secondary_nat: Creating...[0m[0m
+[0m[1maws_ecs_cluster.secondary: Creating...[0m[0m
+[0m[1maws_route53_zone.main: Creating...[0m[0m
+[0m[1maws_vpc.primary: Creating...[0m[0m
+[0m[1maws_iam_role.ecs_task_role: Creating...[0m[0m
+[0m[1maws_eip.primary_nat: Creating...[0m[0m
+[0m[1maws_iam_role.ecs_task_execution_role: Creating...[0m[0m
+[0m[1maws_ecs_cluster.primary: Creating...[0m[0m
+[0m[1maws_ecr_repository.frontend: Creating...[0m[0m
+[0m[1maws_iam_role.ecs_task_execution_role: Creation complete after 2s [id=task-dashboard-ecs-execution-role][0m
+[0m[1maws_cloudwatch_log_group.ecs_logs: Creating...[0m[0m
+[0m[1maws_iam_role.ecs_task_role: Creation complete after 2s [id=task-dashboard-ecs-task-role][0m
+[0m[1maws_ecr_replication_configuration.crr: Creating...[0m[0m
+[0m[1maws_eip.secondary_nat: Creation complete after 3s [id=eipalloc-0ef23f11ff06466b4][0m
+[0m[1maws_ecr_repository.backend: Creating...[0m[0m
+[0m[1maws_ecr_replication_configuration.crr: Creation complete after 1s [id=654654241151][0m
+[0m[1maws_iam_role_policy_attachment.ecs_task_execution_role_policy: Creating...[0m[0m
+[0m[1maws_ecr_repository.frontend: Creation complete after 2s [id=task-dashboard-frontend][0m
+[0m[1maws_ecr_repository.backend: Creation complete after 0s [id=task-dashboard-backend][0m
+[0m[1maws_eip.primary_nat: Creation complete after 3s [id=eipalloc-061f88264d9fc7acd][0m
+[0m[1maws_iam_role_policy_attachment.ecs_task_execution_role_policy: Creation complete after 1s [id=task-dashboard-ecs-execution-role-20260325071418435400000002][0m
+[0m[1maws_cloudwatch_log_group.ecs_logs_secondary: Still creating... [10s elapsed][0m[0m
+[0m[1maws_ecs_cluster.secondary: Still creating... [10s elapsed][0m[0m
+[0m[1maws_vpc.secondary: Still creating... [10s elapsed][0m[0m
+[0m[1maws_ecs_cluster.primary: Still creating... [10s elapsed][0m[0m
+[0m[1maws_vpc.primary: Still creating... [10s elapsed][0m[0m
+[0m[1maws_cloudwatch_log_group.ecs_logs: Still creating... [10s elapsed][0m[0m
+[0m[1maws_ecs_cluster.primary: Creation complete after 13s [id=arn:aws:ecs:us-east-1:654654241151:cluster/task-dashboard-primary-cluster][0m
+[0m[1maws_ecs_cluster.secondary: Creation complete after 13s [id=arn:aws:ecs:us-east-2:654654241151:cluster/task-dashboard-secondary-cluster][0m
+[0m[1maws_vpc.primary: Creation complete after 15s [id=vpc-00d4331877b9fb1cd][0m
+[0m[1maws_internet_gateway.primary_igw: Creating...[0m[0m
+[0m[1maws_subnet.primary_public[0]: Creating...[0m[0m
+[0m[1maws_subnet.primary_public[1]: Creating...[0m[0m
+[0m[1maws_subnet.primary_private[1]: Creating...[0m[0m
+[0m[1maws_security_group.primary_alb_sg: Creating...[0m[0m
+[0m[1maws_lb_target_group.primary_frontend: Creating...[0m[0m
+[0m[1maws_lb_target_group.primary_backend: Creating...[0m[0m
+[0m[1maws_vpc.secondary: Creation complete after 15s [id=vpc-0d4b11033562ff180][0m
+[0m[1maws_subnet.primary_private[0]: Creating...[0m[0m
+[0m[1maws_internet_gateway.primary_igw: Creation complete after 1s [id=igw-0794cecca891dfc20][0m
+[0m[1maws_security_group.secondary_alb_sg: Creating...[0m[0m
+[0m[1maws_subnet.primary_private[1]: Creation complete after 2s [id=subnet-049bee7c595dd8445][0m
+[0m[1maws_subnet.primary_private[0]: Creation complete after 2s [id=subnet-0acc1c1c50031e517][0m
+[0m[1maws_subnet.secondary_public[0]: Creating...[0m[0m
+[0m[1maws_subnet.secondary_public[1]: Creating...[0m[0m
+[0m[1maws_lb_target_group.primary_frontend: Creation complete after 3s [id=arn:aws:elasticloadbalancing:us-east-1:654654241151:targetgroup/task-dashboard-pri-fe-tg/b63d13020ad50137][0m
+[0m[1maws_lb_target_group.secondary_backend: Creating...[0m[0m
+[0m[1maws_lb_target_group.primary_backend: Creation complete after 3s [id=arn:aws:elasticloadbalancing:us-east-1:654654241151:targetgroup/task-dashboard-pri-be-tg/2070f74492961913][0m
+[0m[1maws_internet_gateway.secondary_igw: Creating...[0m[0m
+[0m[1maws_internet_gateway.secondary_igw: Creation complete after 2s [id=igw-03d3a622e1c5c4584][0m
+[0m[1maws_subnet.secondary_private[1]: Creating...[0m[0m
+[0m[1maws_security_group.primary_alb_sg: Creation complete after 5s [id=sg-0629d3653ed3f9038][0m
+[0m[1maws_lb_target_group.secondary_frontend: Creating...[0m[0m
+[0m[1maws_cloudwatch_log_group.ecs_logs_secondary: Still creating... [20s elapsed][0m[0m
+[0m[1maws_subnet.secondary_private[1]: Creation complete after 1s [id=subnet-0daff3cc26ca854bb][0m
+[0m[1maws_subnet.secondary_private[0]: Creating...[0m[0m
+[0m[1maws_security_group.secondary_alb_sg: Creation complete after 5s [id=sg-0bdbf325fe393989d][0m
+[0m[1maws_route_table.primary_public: Creating...[0m[0m
+[0m[1maws_cloudwatch_log_group.ecs_logs: Still creating... [20s elapsed][0m[0m
+[0m[1maws_subnet.secondary_private[0]: Creation complete after 1s [id=subnet-0e8bf45a5e7eff87a][0m
+[0m[1maws_db_subnet_group.primary: Creating...[0m[0m
+[0m[1maws_lb_target_group.secondary_backend: Creation complete after 4s [id=arn:aws:elasticloadbalancing:us-east-2:654654241151:targetgroup/task-dashboard-sec-be-tg/8059ea9c3831553c][0m
+[0m[1maws_route_table.secondary_public: Creating...[0m[0m
+[0m[1maws_lb_target_group.secondary_frontend: Creation complete after 3s [id=arn:aws:elasticloadbalancing:us-east-2:654654241151:targetgroup/task-dashboard-sec-fe-tg/160dcc31cc81f396][0m
+[0m[1maws_security_group.primary_ecs_sg: Creating...[0m[0m
+[0m[1maws_route_table.primary_public: Creation complete after 3s [id=rtb-0a8d9984914c1af2b][0m
+[0m[1maws_security_group.secondary_ecs_sg: Creating...[0m[0m
+[0m[1maws_route_table.secondary_public: Creation complete after 3s [id=rtb-0ecf694dc5b1b0876][0m
+[0m[1maws_db_subnet_group.secondary: Creating...[0m[0m
+[0m[1maws_subnet.primary_public[1]: Still creating... [10s elapsed][0m[0m
+[0m[1maws_subnet.primary_public[0]: Still creating... [10s elapsed][0m[0m
+[0m[1maws_db_subnet_group.primary: Creation complete after 3s [id=task-dashboard-primary-sng][0m
+[0m[1maws_subnet.secondary_public[1]: Still creating... [10s elapsed][0m[0m
+[0m[1maws_subnet.secondary_public[0]: Still creating... [10s elapsed][0m[0m
+[0m[1maws_db_subnet_group.secondary: Creation complete after 2s [id=task-dashboard-secondary-sng][0m
+[0m[1maws_security_group.primary_ecs_sg: Creation complete after 4s [id=sg-061925f772eb51462][0m
+[0m[1maws_subnet.primary_public[0]: Creation complete after 12s [id=subnet-0e506475a69a0c121][0m
+[0m[1maws_nat_gateway.primary_nat: Creating...[0m[0m
+[0m[1maws_security_group.primary_rds_sg: Creating...[0m[0m
+[0m[1maws_subnet.primary_public[1]: Creation complete after 12s [id=subnet-063d1b771cbbd7fa4][0m
+[0m[1maws_route_table_association.primary_public_rta[0]: Creating...[0m[0m
+[0m[1maws_route_table_association.primary_public_rta[1]: Creating...[0m[0m
+[0m[1maws_lb.primary: Creating...[0m[0m
+[0m[1maws_security_group.secondary_ecs_sg: Creation complete after 4s [id=sg-0dea3b6b0558f3319][0m
+[0m[1maws_route_table_association.primary_public_rta[0]: Creation complete after 1s [id=rtbassoc-0a14645263e6a0893][0m
+[0m[1maws_security_group.secondary_rds_sg: Creating...[0m[0m
+[0m[1maws_route_table_association.primary_public_rta[1]: Creation complete after 1s [id=rtbassoc-084ef16325ad6d416][0m
+[0m[1maws_subnet.secondary_public[0]: Creation complete after 12s [id=subnet-0b675c2d2d8eeeaf4][0m
+[0m[1maws_nat_gateway.secondary_nat: Creating...[0m[0m
+[0m[1maws_subnet.secondary_public[1]: Creation complete after 12s [id=subnet-0b48324e8d9679a35][0m
+[0m[1maws_route_table_association.secondary_public_rta[0]: Creating...[0m[0m
+[0m[1maws_route_table_association.secondary_public_rta[1]: Creating...[0m[0m
+[0m[1maws_lb.secondary: Creating...[0m[0m
+[0m[1maws_route_table_association.secondary_public_rta[0]: Creation complete after 1s [id=rtbassoc-00eba79e21fe2496b][0m
+[0m[1maws_route_table_association.secondary_public_rta[1]: Creation complete after 1s [id=rtbassoc-06b2221f806f14d53][0m
+[0m[1maws_cloudwatch_log_group.ecs_logs_secondary: Still creating... [30s elapsed][0m[0m
+[0m[1maws_security_group.primary_rds_sg: Creation complete after 5s [id=sg-0af9165b106960cb1][0m
+[0m[1maws_db_instance.primary: Creating...[0m[0m
+[0m[1maws_cloudwatch_log_group.ecs_logs: Still creating... [30s elapsed][0m[0m
+[0m[1maws_security_group.secondary_rds_sg: Creation complete after 5s [id=sg-0f8c0bccf687ddd61][0m
+[0m[1maws_nat_gateway.primary_nat: Still creating... [10s elapsed][0m[0m
+[0m[1maws_lb.primary: Still creating... [10s elapsed][0m[0m
+[0m[1maws_nat_gateway.secondary_nat: Still creating... [10s elapsed][0m[0m
+[0m[1maws_lb.secondary: Still creating... [10s elapsed][0m[0m
+[0m[1maws_cloudwatch_log_group.ecs_logs_secondary: Still creating... [40s elapsed][0m[0m
+[0m[1maws_cloudwatch_log_group.ecs_logs: Still creating... [40s elapsed][0m[0m
+[0m[1maws_nat_gateway.primary_nat: Still creating... [20s elapsed][0m[0m
+[0m[1maws_lb.primary: Still creating... [20s elapsed][0m[0m
+[0m[1maws_nat_gateway.secondary_nat: Still creating... [20s elapsed][0m[0m
+[0m[1maws_lb.secondary: Still creating... [20s elapsed][0m[0m
+[0m[1maws_cloudwatch_log_group.ecs_logs_secondary: Still creating... [50s elapsed][0m[0m
+[0m[1maws_cloudwatch_log_group.ecs_logs: Still creating... [50s elapsed][0m[0m
+[0m[1maws_nat_gateway.primary_nat: Still creating... [30s elapsed][0m[0m
+[0m[1maws_lb.primary: Still creating... [30s elapsed][0m[0m
+[0m[1maws_nat_gateway.secondary_nat: Still creating... [30s elapsed][0m[0m
+[0m[1maws_lb.secondary: Still creating... [30s elapsed][0m[0m
+[0m[1maws_cloudwatch_log_group.ecs_logs_secondary: Still creating... [1m0s elapsed][0m[0m
+[0m[1maws_cloudwatch_log_group.ecs_logs: Still creating... [1m0s elapsed][0m[0m
+[0m[1maws_nat_gateway.primary_nat: Still creating... [40s elapsed][0m[0m
+[0m[1maws_lb.primary: Still creating... [40s elapsed][0m[0m
+[0m[1maws_nat_gateway.secondary_nat: Still creating... [40s elapsed][0m[0m
+[0m[1maws_lb.secondary: Still creating... [40s elapsed][0m[0m
+[0m[1maws_cloudwatch_log_group.ecs_logs_secondary: Still creating... [1m10s elapsed][0m[0m
+[0m[1maws_cloudwatch_log_group.ecs_logs: Still creating... [1m10s elapsed][0m[0m
+[0m[1maws_nat_gateway.primary_nat: Still creating... [50s elapsed][0m[0m
+[0m[1maws_lb.primary: Still creating... [50s elapsed][0m[0m
+[0m[1maws_nat_gateway.secondary_nat: Still creating... [50s elapsed][0m[0m
+[0m[1maws_lb.secondary: Still creating... [50s elapsed][0m[0m
+[0m[1maws_cloudwatch_log_group.ecs_logs_secondary: Still creating... [1m20s elapsed][0m[0m
+[0m[1maws_cloudwatch_log_group.ecs_logs: Still creating... [1m20s elapsed][0m[0m
+[0m[1maws_nat_gateway.primary_nat: Still creating... [1m0s elapsed][0m[0m
+[0m[1maws_lb.primary: Still creating... [1m0s elapsed][0m[0m
+[0m[1maws_nat_gateway.secondary_nat: Still creating... [1m0s elapsed][0m[0m
+[0m[1maws_lb.secondary: Still creating... [1m0s elapsed][0m[0m
+[0m[1maws_cloudwatch_log_group.ecs_logs_secondary: Still creating... [1m30s elapsed][0m[0m
+[0m[1maws_cloudwatch_log_group.ecs_logs: Still creating... [1m30s elapsed][0m[0m
+[0m[1maws_nat_gateway.primary_nat: Still creating... [1m10s elapsed][0m[0m
+[0m[1maws_lb.primary: Still creating... [1m10s elapsed][0m[0m
+[0m[1maws_nat_gateway.secondary_nat: Still creating... [1m10s elapsed][0m[0m
+[0m[1maws_lb.secondary: Still creating... [1m10s elapsed][0m[0m
+[0m[1maws_cloudwatch_log_group.ecs_logs_secondary: Still creating... [1m40s elapsed][0m[0m
+[0m[1maws_cloudwatch_log_group.ecs_logs: Still creating... [1m40s elapsed][0m[0m
+[0m[1maws_nat_gateway.primary_nat: Still creating... [1m20s elapsed][0m[0m
+[0m[1maws_lb.primary: Still creating... [1m20s elapsed][0m[0m
+[0m[1maws_nat_gateway.secondary_nat: Still creating... [1m20s elapsed][0m[0m
+[0m[1maws_lb.secondary: Still creating... [1m20s elapsed][0m[0m
+[0m[1maws_cloudwatch_log_group.ecs_logs_secondary: Still creating... [1m50s elapsed][0m[0m
+[0m[1maws_cloudwatch_log_group.ecs_logs: Still creating... [1m50s elapsed][0m[0m
+[0m[1maws_nat_gateway.primary_nat: Creation complete after 1m27s [id=nat-0428d5fd4efa1739b][0m
+[0m[1maws_route_table.primary_private: Creating...[0m[0m
+[0m[1maws_route_table.primary_private: Creation complete after 3s [id=rtb-06e43bb0639e434c5][0m
+[0m[1maws_route_table_association.primary_private_rta[0]: Creating...[0m[0m
+[0m[1maws_route_table_association.primary_private_rta[1]: Creating...[0m[0m
+[0m[1maws_lb.primary: Still creating... [1m30s elapsed][0m[0m
+[0m[1maws_route_table_association.primary_private_rta[0]: Creation complete after 1s [id=rtbassoc-07160592b44da40b2][0m
+[0m[1maws_route_table_association.primary_private_rta[1]: Creation complete after 1s [id=rtbassoc-0ba011852009d979c][0m
+[0m[1maws_nat_gateway.secondary_nat: Still creating... [1m30s elapsed][0m[0m
+[0m[1maws_lb.secondary: Still creating... [1m30s elapsed][0m[0m
+[0m[1maws_cloudwatch_log_group.ecs_logs_secondary: Still creating... [2m0s elapsed][0m[0m
+[0m[1maws_cloudwatch_log_group.ecs_logs: Still creating... [2m0s elapsed][0m[0m
+[0m[1maws_lb.primary: Still creating... [1m40s elapsed][0m[0m
+[0m[1maws_nat_gateway.secondary_nat: Still creating... [1m40s elapsed][0m[0m
+[0m[1maws_lb.secondary: Still creating... [1m40s elapsed][0m[0m
+[0m[1maws_lb.primary: Still creating... [1m50s elapsed][0m[0m
+[0m[1maws_nat_gateway.secondary_nat: Still creating... [1m50s elapsed][0m[0m
+[0m[1maws_lb.secondary: Still creating... [1m50s elapsed][0m[0m
+[0m[1maws_nat_gateway.secondary_nat: Creation complete after 1m58s [id=nat-0943f96eea292b472][0m
+[0m[1maws_route_table.secondary_private: Creating...[0m[0m
+[0m[1maws_lb.primary: Still creating... [2m0s elapsed][0m[0m
+[0m[1maws_lb.secondary: Still creating... [2m0s elapsed][0m[0m
+[0m[1maws_route_table.secondary_private: Creation complete after 2s [id=rtb-087929a134572c313][0m
+[0m[1maws_route_table_association.secondary_private_rta[0]: Creating...[0m[0m
+[0m[1maws_route_table_association.secondary_private_rta[1]: Creating...[0m[0m
+[0m[1maws_route_table_association.secondary_private_rta[0]: Creation complete after 3s [id=rtbassoc-030ef4e96040baccb][0m
+[0m[1maws_route_table_association.secondary_private_rta[1]: Creation complete after 3s [id=rtbassoc-016f2df3fd7dc33e4][0m
+[0m[1maws_lb.primary: Still creating... [2m10s elapsed][0m[0m
+[0m[1maws_lb.secondary: Still creating... [2m10s elapsed][0m[0m
+[0m[1maws_lb.primary: Still creating... [2m20s elapsed][0m[0m
+[0m[1maws_lb.secondary: Still creating... [2m20s elapsed][0m[0m
+[0m[1maws_lb.primary: Creation complete after 2m25s [id=arn:aws:elasticloadbalancing:us-east-1:654654241151:loadbalancer/app/task-dashboard-primary-alb/23e73cabea99ff48][0m
+[0m[1maws_route53_health_check.primary: Creating...[0m[0m
+[0m[1maws_lb_listener.primary_http: Creating...[0m[0m
+[0m[1maws_lb_listener.primary_http: Creation complete after 2s [id=arn:aws:elasticloadbalancing:us-east-1:654654241151:listener/app/task-dashboard-primary-alb/23e73cabea99ff48/a3aa7d525308cc4e][0m
+[0m[1maws_lb_listener_rule.primary_api: Creating...[0m[0m
+[0m[1maws_lb_listener_rule.primary_api: Creation complete after 1s [id=arn:aws:elasticloadbalancing:us-east-1:654654241151:listener-rule/app/task-dashboard-primary-alb/23e73cabea99ff48/a3aa7d525308cc4e/209671030085ddc5][0m
+[0m[1maws_route53_health_check.primary: Creation complete after 4s [id=76ad8136-8eb9-4add-bb2b-8b64f35a9921][0m
+[0m[1maws_lb.secondary: Still creating... [2m30s elapsed][0m[0m
+[0m[1maws_lb.secondary: Still creating... [2m40s elapsed][0m[0m
+[0m[1maws_lb.secondary: Still creating... [2m50s elapsed][0m[0m
+[0m[1maws_lb.secondary: Still creating... [3m0s elapsed][0m[0m
+[0m[1maws_lb.secondary: Creation complete after 3m6s [id=arn:aws:elasticloadbalancing:us-east-2:654654241151:loadbalancer/app/task-dashboard-secondary-alb/27aa102b2f2a94d1][0m
+[0m[1maws_route53_health_check.secondary: Creating...[0m[0m
+[0m[1maws_lb_listener.secondary_http: Creating...[0m[0m
+[0m[1maws_lb_listener.secondary_http: Creation complete after 1s [id=arn:aws:elasticloadbalancing:us-east-2:654654241151:listener/app/task-dashboard-secondary-alb/27aa102b2f2a94d1/8e252ee1a9a521d6][0m
+[0m[1maws_lb_listener_rule.secondary_api: Creating...[0m[0m
+[0m[1maws_route53_health_check.secondary: Creation complete after 2s [id=06f432cd-9a66-4e42-941d-0b8089a75019][0m
+[0m[1maws_lb_listener_rule.secondary_api: Creation complete after 1s [id=arn:aws:elasticloadbalancing:us-east-2:654654241151:listener-rule/app/task-dashboard-secondary-alb/27aa102b2f2a94d1/8e252ee1a9a521d6/ea86b758c945af94][0m
+.\terraform.exe : [31mΓò╖[0m[0m
+At line:1 char:1
++ .\terraform.exe apply -var="db_password=SuperSecretDBPass123!" 
+-auto- ...
++ 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([31mΓò╖[0m[0m:String) 
+    [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[31mΓöé[0m [0m[1m[31mError: [0m[0m[1msetting CloudWatch Logs 
+Log Group (/ecs/task-dashboard) retention policy: operation error 
+CloudWatch Logs: PutRetentionPolicy, https response error StatusCode: 
+400, RequestID: af468d55-b558-408a-b5d8-2f7c60cb37db, api error 
+AccessDeniedException: User: 
+arn:aws:iam::654654241151:user/kk_labs_user_160526 is not authorized 
+to perform: logs:PutRetentionPolicy on resource: arn:aws:logs:us-east-
+1:654654241151:log-group:/ecs/task-dashboard:log-stream: because no 
+identity-based policy allows the logs:PutRetentionPolicy action[0m
+[31mΓöé[0m [0m
+[31mΓöé[0m [0m[0m  with aws_cloudwatch_log_group.ecs_logs,
+[31mΓöé[0m [0m  on ecs.tf line 23, in resource 
+"aws_cloudwatch_log_group" "ecs_logs":
+[31mΓöé[0m [0m  23: resource "aws_cloudwatch_log_group" "ecs_logs" 
+[4m{[0m[0m
+[31mΓöé[0m [0m
+[31mΓò╡[0m[0m
+[31mΓò╖[0m[0m
+[31mΓöé[0m [0m[1m[31mError: [0m[0m[1msetting CloudWatch Logs 
+Log Group (/ecs/task-dashboard) retention policy: operation error 
+CloudWatch Logs: PutRetentionPolicy, https response error StatusCode: 
+400, RequestID: 6240f1af-de0c-47a6-a748-667a5494ee52, api error 
+AccessDeniedException: User: 
+arn:aws:iam::654654241151:user/kk_labs_user_160526 is not authorized 
+to perform: logs:PutRetentionPolicy on resource: arn:aws:logs:us-east-
+2:654654241151:log-group:/ecs/task-dashboard:log-stream: because no 
+identity-based policy allows the logs:PutRetentionPolicy action[0m
+[31mΓöé[0m [0m
+[31mΓöé[0m [0m[0m  with 
+aws_cloudwatch_log_group.ecs_logs_secondary,
+[31mΓöé[0m [0m  on ecs.tf line 28, in resource 
+"aws_cloudwatch_log_group" "ecs_logs_secondary":
+[31mΓöé[0m [0m  28: resource "aws_cloudwatch_log_group" 
+"ecs_logs_secondary" [4m{[0m[0m
+[31mΓöé[0m [0m
+[31mΓò╡[0m[0m
+[31mΓò╖[0m[0m
+[31mΓöé[0m [0m[1m[31mError: [0m[0m[1mcreating RDS DB Instance 
+(task-dashboard-primary-db): operation error RDS: CreateDBInstance, 
+https response error StatusCode: 400, RequestID: 
+862e548d-b9ff-4c60-bd70-35d63cf5ccf7, api error 
+InvalidParameterValue: MasterUsername admin cannot be used as it is a 
+reserved word used by the engine[0m
+[31mΓöé[0m [0m
+[31mΓöé[0m [0m[0m  with aws_db_instance.primary,
+[31mΓöé[0m [0m  on rds.tf line 17, in resource "aws_db_instance" 
+"primary":
+[31mΓöé[0m [0m  17: resource "aws_db_instance" "primary" 
+[4m{[0m[0m
+[31mΓöé[0m [0m
+[31mΓò╡[0m[0m
+[31mΓò╖[0m[0m
+[31mΓöé[0m [0m[1m[31mError: [0m[0m[1mcreating Route53 Hosted 
+Zone (example.com): operation error Route 53: CreateHostedZone, https 
+response error StatusCode: 400, RequestID: 
+009a2e45-4905-4e45-a37a-d46708010186, InvalidDomainName: example.com 
+is reserved by AWS![0m
+[31mΓöé[0m [0m
+[31mΓöé[0m [0m[0m  with aws_route53_zone.main,
+[31mΓöé[0m [0m  on route53.tf line 2, in resource 
+"aws_route53_zone" "main":
+[31mΓöé[0m [0m   2: resource "aws_route53_zone" "main" 
+[4m{[0m[0m
+[31mΓöé[0m [0m
+[31mΓò╡[0m[0m
