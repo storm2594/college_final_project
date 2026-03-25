@@ -145,7 +145,7 @@ resource "aws_ecs_task_definition" "secondary_backend" {
       hostPort      = 3000
     }]
     environment = [
-      { name = "DATABASE_URL", value = "postgres://${var.db_username}:${var.db_password}@${aws_db_instance.primary.endpoint}/${var.project_name}" }
+      { name = "DATABASE_URL", value = "postgres://${var.db_username}:${var.db_password}@${aws_db_instance.primary.endpoint}/postgres" }
     ]
     logConfiguration = {
       logDriver = "awslogs"
